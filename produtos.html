@@ -1,268 +1,553 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Uniformes escolares com qualidade, conforto e padronização. Conheça a Formato Confecções e nossos modelos mais procurados."
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    />
+    <link rel="stylesheet" href="./style/produtos.css" />
+    <title>Formato Confecções</title>
+  </head>
+  <body>
+    <header>
+      <a href="./index.html">
+        <img
+          src="./img/Logo_Formato_Confeccoes.webp"
+          alt="Logo Formato Confecções"
+        />
+      </a>
+
+      <nav class="links_header">
+        <a href="./index.html">Inicio</a>
+        <a href="./produtos.html">Produtos</a>
+        <a href="./sobrenos.html">Sobre Nós</a>
+      </nav>
+
+      <ul>
+        <li class="login">
+          <a href="#">Login</a>
+        </li>
+        <li>
+          <a href="#"><i class="fa-solid fa-cart-shopping"></i></a>
+        </li>
+      </ul>
+    </header>
     <section class="container_principal">
-        <h1>Colégio Elite</h1>
+      <h1>Colégio Elite</h1>
 
-        <div class="container_card">
-          <!-- 1 -->
-          <div class="card" id="camisa-infantil-curta">
+      <!-- FILTROS -->
+      <div class="filtros">
+        <button data-filter="all" class="ativo">Todos</button>
+        <button data-filter="infantil">Infantil</button>
+        <button data-filter="juvenil">Juvenil</button>
+        <button data-filter="masculino">Masculino</button>
+        <button data-filter="feminino">Feminino</button>
+        <button data-filter="unissex">Unissex</button>
+      </div>
+
+      <div class="container_card">
+        <!-- 1 -->
+        <div
+          class="card"
+          id="camisa-infantil-curta"
+          data-publico="infantil"
+          data-genero="unissex"
+        >
+          <div class="img_card">
             <img
-              src="./img/camisa-infantil-curta.png"
-              alt="Camisa Infantil Manga Curta"
+              src="./img/Colegio_Elite/Camisa_Educação_Infantil_Elite.png"
+              alt="Camisa educação infantil Colégio Elite"
             />
-            <h1>Camisa Infantil</h1>
-            <p>Manga Curta</p>
-            <span>Poliviscose</span>
-            <div class="botoes">
-              <a
-                href="produto.html?id=camisa-infantil-curta"
-                class="btn-detalhe"
-                >Ver detalhe</a
-              >
-            </div>
           </div>
-
-          <!-- 2 -->
-          <div class="card" id="camisa-infantil-longa">
-            <img
-              src="./img/camisa-infantil-longa.png"
-              alt="Camisa Infantil Manga Longa"
-            />
-            <h1>Camisa Infantil</h1>
-            <p>Manga Longa</p>
-            <span>Poliviscose</span>
-            <div class="botoes">
-              <a
-                href="produto.html?id=camisa-infantil-longa"
-                class="btn-detalhe"
-                >Ver detalhe</a
-              >
-            </div>
-          </div>
-
-          <!-- 3 -->
-          <div class="card" id="camisa-fundamental-curta">
-            <img
-              src="./img/camisa-fundamental-curta.png"
-              alt="Camisa Fundamental Manga Curta"
-            />
-            <h1>Camisa Fundamental</h1>
-            <p>Manga Curta</p>
-            <span>Poliviscose</span>
-            <div class="botoes">
-              <a
-                href="produto.html?id=camisa-fundamental-curta"
-                class="btn-detalhe"
-                >Ver detalhe</a
-              >
-            </div>
-          </div>
-
-          <!-- 4 -->
-          <div class="card" id="camisa-fundamental-longa">
-            <img
-              src="./img/camisa-fundamental-longa.png"
-              alt="Camisa Fundamental Manga Longa"
-            />
-            <h1>Camisa Fundamental</h1>
-            <p>Manga Longa</p>
-            <span>Poliviscose</span>
-            <div class="botoes">
-              <a
-                href="produto.html?id=camisa-fundamental-longa"
-                class="btn-detalhe"
-                >Ver detalhe</a
-              >
-            </div>
-          </div>
-
-          <!-- 5 -->
-          <div class="card" id="camisa-educacao-fisica">
-            <img src="./img/camisa-ef.png" alt="Camisa Educação Física" />
-            <h1>Camisa Educação Física</h1>
-            <p>Uso esportivo</p>
-            <span>Dry Fit</span>
-            <div class="botoes">
-              <a
-                href="produto.html?id=camisa-educacao-fisica"
-                class="btn-detalhe"
-                >Ver detalhe</a
-              >
-            </div>
-          </div>
-
-          <!-- 6 -->
-          <div class="card" id="bermuda-escolar">
-            <img src="./img/bermuda.png" alt="Bermuda Escolar" />
-            <h1>Bermuda Escolar</h1>
-            <p>Uniforme diário</p>
-            <span>Microfibra / Helanca</span>
-            <div class="botoes">
-              <a href="produto.html?id=bermuda-escolar" class="btn-detalhe"
-                >Ver detalhe</a
-              >
-            </div>
-          </div>
-
-          <!-- 7 -->
-          <div class="card" id="calca-unissex">
-            <img src="./img/calca.png" alt="Calça Escolar" />
-            <h1>Calça Escolar</h1>
-            <p>Unissex</p>
-            <span>Helanca</span>
-            <div class="botoes">
-              <a href="produto.html?id=calca-unissex" class="btn-detalhe"
-                >Ver detalhe</a
-              >
-            </div>
-          </div>
-
-          <!-- 8 -->
-          <div class="card" id="short-feminino">
-            <img src="./img/short.png" alt="Short Feminino" />
-            <h1>Short Feminino</h1>
-            <p>Uniforme escolar</p>
-            <span>Helanca</span>
-            <div class="botoes">
-              <a href="produto.html?id=short-feminino" class="btn-detalhe"
-                >Ver detalhe</a
-              >
-            </div>
-          </div>
-
-          <!-- 9 -->
-          <div class="card" id="short-saia">
-            <img src="./img/short-saia.png" alt="Short Saia Infantil" />
-            <h1>Short-Saia Infantil</h1>
-            <p>Uso diário</p>
-            <span>Helanca</span>
-            <div class="botoes">
-              <a href="produto.html?id=short-saia" class="btn-detalhe"
-                >Ver detalhe</a
-              >
-            </div>
-          </div>
-
-          <!-- 10 -->
-          <div class="card" id="legging">
-            <img src="./img/legging.png" alt="Calça Legging" />
-            <h1>Calça Legging</h1>
-            <p>Uniforme feminino</p>
-            <span>Helanca</span>
-            <div class="botoes">
-              <a href="produto.html?id=legging" class="btn-detalhe"
-                >Ver detalhe</a
-              >
-            </div>
-          </div>
-
-          <!-- 11 -->
-          <div class="card" id="vestido-polo">
-            <img src="./img/vestido.png" alt="Vestido Polo Infantil" />
-            <h1>Vestido Polo Infantil</h1>
-            <p>Uniforme escolar</p>
-            <span>Poliviscose</span>
-            <div class="botoes">
-              <a href="produto.html?id=vestido-polo" class="btn-detalhe"
-                >Ver detalhe</a
-              >
-            </div>
-          </div>
-
-          <!-- 12 -->
-          <div class="card" id="jaqueta-college-matelassada">
-            <img
-              src="./img/jaqueta-matelassada.png"
-              alt="Jaqueta College Matelassada"
-            />
-            <h1>Jaqueta College</h1>
-            <p>Matelassada</p>
-            <span>Poliéster</span>
-            <div class="botoes">
-              <a
-                href="produto.html?id=jaqueta-college-matelassada"
-                class="btn-detalhe"
-                >Ver detalhe</a
-              >
-            </div>
-          </div>
-
-          <!-- 13 -->
-          <div class="card" id="jaqueta-college-moletom">
-            <img
-              src="./img/jaqueta-moletom.png"
-              alt="Jaqueta College Moletom"
-            />
-            <h1>Jaqueta College</h1>
-            <p>Moletom</p>
-            <span>Algodão</span>
-            <div class="botoes">
-              <a
-                href="produto.html?id=jaqueta-college-moletom"
-                class="btn-detalhe"
-                >Ver detalhe</a
-              >
-            </div>
-          </div>
-
-          <!-- 14 -->
-          <div class="card" id="casaco-moletom">
-            <img src="./img/casaco.png" alt="Casaco Moletom" />
-            <h1>Casaco Moletom</h1>
-            <p>Uniforme inverno</p>
-            <span>Algodão</span>
-            <div class="botoes">
-              <a href="produto.html?id=casaco-moletom" class="btn-detalhe"
-                >Ver detalhe</a
-              >
-            </div>
-          </div>
-
-          <!-- 15 -->
-          <div class="card" id="casaco-canguru">
-            <img src="./img/canguru.png" alt="Casaco Canguru" />
-            <h1>Casaco Canguru</h1>
-            <p>Com capuz</p>
-            <span>Moletom</span>
-            <div class="botoes">
-              <a href="produto.html?id=casaco-canguru" class="btn-detalhe"
-                >Ver detalhe</a
-              >
-            </div>
-          </div>
-
-          <!-- 16 -->
-          <div class="card" id="corta-vento">
-            <img src="./img/corta-vento.png" alt="Casaco Corta Vento" />
-            <h1>Casaco Corta Vento</h1>
-            <p>Proteção leve</p>
-            <span>Poliéster</span>
-            <div class="botoes">
-              <a href="produto.html?id=corta-vento" class="btn-detalhe"
-                >Ver detalhe</a
-              >
-            </div>
-          </div>
-
-          <!-- 17 -->
-          <div class="card" id="jaqueta-ef">
-            <img src="./img/jaqueta-ef.png" alt="Jaqueta Educação Física" />
-            <h1>Jaqueta Educação Física</h1>
-            <p>Conjunto esportivo</p>
-            <span>Poliéster</span>
-            <div class="botoes">
-              <a href="produto.html?id=jaqueta-ef" class="btn-detalhe"
-                >Ver detalhe</a
-              >
-            </div>
+          <h1>Camisa Educação Infantil E Fundamental Anos Iniciais</h1>
+          <p>Unissex · Infantil</p>
+          <span>65% Poliéster · 35% Viscose</span>
+          <div class="preco"><span>A partir de R$ 48,00</span></div>
+          <div class="botoes">
+            <a href="produto.html?id=camisa-infantil-curta" class="btn-detalhe"
+              >Ver produto</a
+            >
           </div>
         </div>
-      </section>
-</body>
+
+        <!-- 2 -->
+        <div
+          class="card"
+          id="camisa-educacao-fisica"
+          data-publico="juvenil"
+          data-genero="unissex"
+        >
+          <div class="img_card">
+            <img
+              src="./img/Colegio_Elite/Camisa_Educacao_Fisica_E_Fundamental_Anos_Finais_E_Ensino_Medio_Elite.png"
+              alt="Camisa educação física Colégio Elite"
+            />
+          </div>
+          <h1>Camisa Educação Física Fundamental E Médio</h1>
+          <p>Unissex · Fundamental E Médio</p>
+          <span>65% Poliéster · 35% Viscose</span>
+          <div class="preco"><span>A partir de R$ 48,00</span></div>
+          <div class="botoes">
+            <a href="produto.html?id=camisa-educacao-fisica" class="btn-detalhe"
+              >Ver produto</a
+            >
+          </div>
+        </div>
+
+        <!-- 3 -->
+        <div
+          class="card"
+          id="bermuda-escolar"
+          data-publico="infantil juvenil"
+          data-genero="masculino"
+        >
+          <div class="img_card">
+            <img
+              src="./img/Colegio_Elite/Bermuda_Elite.png"
+              alt="Bermuda escolar Colégio Elite"
+            />
+          </div>
+          <h1>Bermuda Escolar</h1>
+          <p>Masculino · Infantil E Juvenil</p>
+          <span>100% Poliéster Ou Poliamida</span>
+          <div class="preco"><span>A partir de R$ 62,00</span></div>
+          <div class="botoes">
+            <a href="produto.html?id=bermuda-escolar" class="btn-detalhe"
+              >Ver produto</a
+            >
+          </div>
+        </div>
+
+        <!-- 4 -->
+        <div
+          class="card"
+          id="short-feminino"
+          data-publico="infantil juvenil"
+          data-genero="feminino"
+        >
+          <div class="img_card">
+            <img
+              src="./img/Colegio_Elite/Short_Feminino_Elite.png"
+              alt="Short escolar feminino Colégio Elite"
+            />
+          </div>
+          <h1>Short Escolar</h1>
+          <p>Feminino · Infantil E Juvenil</p>
+          <span>88% Poliamida · 12% Elastano</span>
+          <div class="preco"><span>A partir de R$ 62,00</span></div>
+          <div class="botoes">
+            <a href="produto.html?id=short-feminino" class="btn-detalhe"
+              >Ver produto</a
+            >
+          </div>
+        </div>
+
+        <!-- 5 -->
+        <div
+          class="card"
+          id="short-saia"
+          data-publico="infantil"
+          data-genero="feminino"
+        >
+          <div class="img_card">
+            <img
+              src="./img/Colegio_Elite/Short-Saia_Infantil_Elite.png"
+              alt="Short-saia infantil Colégio Elite"
+            />
+          </div>
+          <h1>Short-Saia Escolar</h1>
+          <p>Feminino · Infantil</p>
+          <span>100% Poliéster Ou Poliamida</span>
+          <div class="preco"><span>A partir de R$ 60,00</span></div>
+          <div class="botoes">
+            <a href="produto.html?id=short-saia" class="btn-detalhe"
+              >Ver produto</a
+            >
+          </div>
+        </div>
+
+        <!-- 6 -->
+        <div
+          class="card"
+          id="calca-escolar"
+          data-publico="infantil juvenil"
+          data-genero="unissex"
+        >
+          <div class="img_card">
+            <img
+              src="./img/Colegio_Elite/Calça_Unissex_Elite.png"
+              alt="Calça escolar unissex Colégio Elite"
+            />
+          </div>
+          <h1>Calça Escolar</h1>
+          <p>Unissex · Infantil E Juvenil</p>
+          <span>100% Poliéster Ou Poliamida</span>
+          <div class="preco"><span>A partir de R$ 70,00</span></div>
+          <div class="botoes">
+            <a href="produto.html?id=calca-escolar" class="btn-detalhe"
+              >Ver produto</a
+            >
+          </div>
+        </div>
+
+        <!-- 7 -->
+        <div
+          class="card"
+          id="camisa-ml-infantil"
+          data-publico="infantil"
+          data-genero="unissex"
+        >
+          <div class="img_card">
+            <img
+              src="./img/Colegio_Elite/Camisa_ML_Educacao_Infantil_Elite.png"
+              alt="Camisa manga longa infantil Colégio Elite"
+            />
+          </div>
+          <h1>Camisa Manga Longa Infantil</h1>
+          <p>Unissex · Infantil</p>
+          <span>65% Poliéster · 35% Viscose</span>
+          <div class="preco"><span>A partir de R$ 68,00</span></div>
+          <div class="botoes">
+            <a href="produto.html?id=camisa-ml-infantil" class="btn-detalhe"
+              >Ver produto</a
+            >
+          </div>
+        </div>
+
+        <!-- 8 -->
+        <div
+          class="card"
+          id="camisa-ml-medio"
+          data-publico="juvenil"
+          data-genero="unissex"
+        >
+          <div class="img_card">
+            <img
+              src="./img/Colegio_Elite/Camisa_Ensino_Fundamental_Anos_Finais_E_Ensino_Medio_Elite.png"
+              alt="Camisa manga longa fundamental e médio Colégio Elite"
+            />
+          </div>
+          <h1>Camisa Manga Longa Fundamental E Médio</h1>
+          <p>Unissex · Fundamental E Médio</p>
+          <span>65% Poliéster · 35% Viscose</span>
+          <div class="preco"><span>A partir de R$ 68,00</span></div>
+          <div class="botoes">
+            <a href="produto.html?id=camisa-ml-medio" class="btn-detalhe"
+              >Ver produto</a
+            >
+          </div>
+        </div>
+
+        <!-- 9 -->
+        <div
+          class="card"
+          id="legging-escolar"
+          data-publico="infantil juvenil"
+          data-genero="feminino"
+        >
+          <div class="img_card">
+            <img
+              src="./img/Colegio_Elite/Calça_Legging_Elite.png"
+              alt="Calça legging escolar Colégio Elite"
+            />
+          </div>
+          <h1>Calça Legging Escolar</h1>
+          <p>Feminino · Infantil E Juvenil</p>
+          <span>65% Poliéster · 35% Viscose</span>
+          <div class="preco"><span>A partir de R$ 78,00</span></div>
+          <div class="botoes">
+            <a href="produto.html?id=legging-escolar" class="btn-detalhe"
+              >Ver produto</a
+            >
+          </div>
+        </div>
+
+        <!-- 10 -->
+        <div
+          class="card"
+          id="vestido-escolar"
+          data-publico="infantil"
+          data-genero="feminino"
+        >
+          <div class="img_card">
+            <img
+              src="./img/Colegio_Elite/Vestido_Polo_Infantil_Elite.png"
+              alt="Vestido polo infantil Colégio Elite"
+            />
+          </div>
+          <h1>Vestido Polo Escolar</h1>
+          <p>Feminino · Infantil</p>
+          <span>50% Poliéster · 50% Algodão</span>
+          <div class="preco"><span>A partir de R$ 85,00</span></div>
+          <div class="botoes">
+            <a href="produto.html?id=vestido-escolar" class="btn-detalhe"
+              >Ver produto</a
+            >
+          </div>
+        </div>
+
+        <!-- 11 -->
+        <div
+          class="card"
+          id="jaqueta-matelassada"
+          data-publico="infantil juvenil"
+          data-genero="unissex"
+        >
+          <div class="img_card">
+            <img
+              src="./img/Colegio_Elite/Jaqueta_College_Matelassada_Elite.png"
+              alt="Jaqueta college matelassada Colégio Elite"
+            />
+          </div>
+          <h1>Jaqueta College Matelassada</h1>
+          <p>Unissex · Infantil E Juvenil</p>
+          <span>Tecido Camberra · Ribana Poliéster</span>
+          <div class="preco"><span>A partir de R$ 115,00</span></div>
+          <div class="botoes">
+            <a href="produto.html?id=jaqueta-matelassada" class="btn-detalhe"
+              >Ver produto</a
+            >
+          </div>
+        </div>
+
+        <!-- 12 -->
+        <div
+          class="card"
+          id="jaqueta-moletom"
+          data-publico="infantil juvenil"
+          data-genero="unissex"
+        >
+          <div class="img_card">
+            <img
+              src="./img/Colegio_Elite/Jaqueta_College_Moleton_Elite.png"
+              alt="Jaqueta college moletom Colégio Elite"
+            />
+          </div>
+          <h1>Jaqueta College Moletom</h1>
+          <p>Unissex · Infantil E Juvenil</p>
+          <span>50% Poliéster · 50% Algodão</span>
+          <div class="preco"><span>A partir de R$ 85,00</span></div>
+          <div class="botoes">
+            <a href="produto.html?id=jaqueta-moletom" class="btn-detalhe"
+              >Ver produto</a
+            >
+          </div>
+        </div>
+
+        <!-- 13 -->
+        <div
+          class="card"
+          id="casaco-moletom"
+          data-publico="infantil juvenil"
+          data-genero="unissex"
+        >
+          <div class="img_card">
+            <img
+              src="./img/Colegio_Elite/Casaco_Moleton_Elite.png"
+              alt="Casaco moletom escolar Colégio Elite"
+            />
+          </div>
+          <h1>Casaco Moletom</h1>
+          <p>Unissex · Infantil E Juvenil</p>
+          <span>50% Poliéster · 50% Algodão</span>
+          <div class="preco"><span>A partir de R$ 75,00</span></div>
+          <div class="botoes">
+            <a href="produto.html?id=casaco-moletom" class="btn-detalhe"
+              >Ver produto</a
+            >
+          </div>
+        </div>
+
+        <!-- 14 -->
+        <div
+          class="card"
+          id="casaco-canguru"
+          data-publico="infantil juvenil"
+          data-genero="unissex"
+        >
+          <div class="img_card">
+            <img
+              src="./img/Colegio_Elite/Casaco_Moletom_Canguru_Elite.png"
+              alt="Casaco moletom canguru Colégio Elite"
+            />
+          </div>
+          <h1>Casaco Moletom Canguru</h1>
+          <p>Unissex · Infantil E Juvenil</p>
+          <span>50% Poliéster · 50% Algodão</span>
+          <div class="preco"><span>A partir de R$ 85,00</span></div>
+          <div class="botoes">
+            <a href="produto.html?id=casaco-canguru" class="btn-detalhe"
+              >Ver produto</a
+            >
+          </div>
+        </div>
+
+        <!-- 15 -->
+        <div
+          class="card"
+          id="corta-vento"
+          data-publico="infantil juvenil"
+          data-genero="unissex"
+        >
+          <div class="img_card">
+            <img
+              src="./img/Colegio_Elite/Casaco_Corta_Vento_Elite.png"
+              alt="Casaco corta vento escolar Colégio Elite"
+            />
+          </div>
+          <h1>Casaco Corta Vento</h1>
+          <p>Unissex · Infantil E Juvenil</p>
+          <span>100% Poliéster</span>
+          <div class="preco"><span>A partir de R$ 80,00</span></div>
+          <div class="botoes">
+            <a href="produto.html?id=corta-vento" class="btn-detalhe"
+              >Ver produto</a
+            >
+          </div>
+        </div>
+
+        <!-- 16 -->
+        <div
+          class="card"
+          id="jaqueta-ed-fisica"
+          data-publico="juvenil"
+          data-genero="unissex"
+        >
+          <div class="img_card">
+            <img
+              src="./img/Colegio_Elite/Camisa_Educacao_Fisica_E_Fundamental_Anos_Finais_E_Ensino_Medio_Elite.png"
+              alt="Jaqueta educação física Colégio Elite"
+            />
+          </div>
+          <h1>Jaqueta Educação Física</h1>
+          <p>Unissex · Fundamental E Médio</p>
+          <span>100% Poliéster</span>
+          <div class="preco"><span>A partir de R$ 115,00</span></div>
+          <div class="botoes">
+            <a href="produto.html?id=jaqueta-ed-fisica" class="btn-detalhe"
+              >Ver produto</a
+            >
+          </div>
+        </div>
+
+        <!-- 17 -->
+        <div
+          class="card"
+          id="calca-ed-fisica"
+          data-publico="infantil juvenil"
+          data-genero="unissex"
+        >
+          <div class="img_card">
+            <img
+              src="./img/Colegio_Elite/Calça_Legging_Elite.png"
+              alt="Calça educação física Colégio Elite"
+            />
+          </div>
+          <h1>Calça Educação Física</h1>
+          <p>Unissex · Infantil E Juvenil</p>
+          <span>65% Poliéster · 35% Viscose</span>
+          <div class="preco"><span>A partir de R$ 78,00</span></div>
+          <div class="botoes">
+            <a href="produto.html?id=calca-ed-fisica" class="btn-detalhe"
+              >Ver produto</a
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WHATSAPP FLUTUANTE -->
+    <a href="#" class="whatsapp_btn">
+      <img
+        loading="lazy"
+        src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
+        alt="WhatsApp"
+      />
+    </a>
+
+    <footer class="footer">
+      <div class="footer-container">
+        <div class="footer-col">
+          <h3>Formato Confecções</h3>
+          <p>
+            Especialistas em uniformes escolares, oferecendo qualidade, conforto
+            e padronização para alunos de todo o Brasil.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h3>Institucional</h3>
+          <ul>
+            <li><a href="./sobrenos.html">Sobre nós</a></li>
+            <li><a href="./produtos.html">Produtos</a></li>
+            <li><a href="./index.html">Inicio</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h3>Atendimento</h3>
+          <ul>
+            <li><i class="fa-solid fa-phone"></i> (19) 00000-0000</li>
+            <li>
+              <i class="fa-solid fa-envelope"></i>
+              contato@formatoconfeccoes.com
+            </li>
+            <li>
+              <i class="fa-solid fa-location-dot"></i>
+              Atendimento em todo o Brasil
+            </li>
+          </ul>
+        </div>
+
+        <div class="footer-col pagamentos-col">
+          <h3>Formas de pagamento</h3>
+
+          <div class="pagamentos-icones">
+            <i class="fa-brands fa-pix"></i>
+            <i class="fa-brands fa-cc-visa"></i>
+            <i class="fa-brands fa-cc-mastercard"></i>
+            <i class="fa-brands fa-cc-amex"></i>
+            <i class="fa-solid fa-barcode"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2025 Formato Confecções. Todos os direitos reservados.</p>
+      </div>
+    </footer>
+
+    <script>
+      const buttons = document.querySelectorAll(".filtros button");
+      const cards = document.querySelectorAll(".card");
+
+      buttons.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          buttons.forEach((b) => b.classList.remove("ativo"));
+          btn.classList.add("ativo");
+
+          const filtro = btn.dataset.filter;
+
+          cards.forEach((card) => {
+            if (
+              filtro === "all" ||
+              card.dataset.publico.includes(filtro) ||
+              card.dataset.genero.includes(filtro)
+            ) {
+              card.style.display = "flex";
+            } else {
+              card.style.display = "none";
+            }
+          });
+        });
+      });
+    </script>
+  </body>
 </html>

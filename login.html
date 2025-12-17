@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="./style/login.css">
+  <title>Login e Cadastro</title>
+</head>
+<body>
+
+<div class="container" id="container">
+
+  <!-- LOGIN -->
+  <div class="form-container login-container">
+    <form>
+      <h1 class="titulo">Login</h1>
+
+      <div class="campo">
+        <input type="email" placeholder="E-mail" required>
+      </div>
+
+      <div class="campo">
+        <input type="password" placeholder="Senha" required>
+      </div>
+
+      <div class="opcoes">
+        <a href="#" class="esqueci-senha">Esqueci minha senha</a>
+      </div>
+
+      <button type="submit" class="entrar">Entrar</button>
+
+      <div class="divisor">ou</div>
+
+      <div class="login-social">
+        <button class="facebook">
+          <i class="fab fa-facebook-f"></i> Facebook
+        </button>
+        <button class="google">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 48 48">
+                <path fill="#EA4335" d="M24 9.5c3.54 0 6.74 1.22 9.27 3.6l6.91-6.91C36.09 2.77 30.39 0 24 0 14.64 0 6.4 5.3 2.56 13.05l8.24 6.4C12.64 12.55 17.88 9.5 24 9.5z"/>
+                <path fill="#4285F4" d="M46.5 24c0-1.57-.14-3.08-.4-4.5H24v9.03h12.68c-.55 2.96-2.2 5.47-4.68 7.15l7.27 5.66C43.33 37.02 46.5 30.98 46.5 24z"/>
+                <path fill="#FBBC05" d="M11.8 28.45c-.48-1.44-.75-2.97-.75-4.55s.27-3.11.75-4.55l-8.24-6.4C1.38 15.48 0 19.58 0 24s1.38 8.52 3.56 11.55l8.24-6.4z"/>
+                <path fill="#34A853" d="M24 48c6.48 0 11.92-2.13 15.89-5.79l-7.27-5.66c-2.04 1.38-4.65 2.2-8.62 2.2-6.12 0-11.36-3.05-14.2-7.95l-8.24 6.4C6.4 42.7 14.64 48 24 48z"/>
+                <path fill="none" d="M0 0h48v48H0z"/>
+            </svg>
+            <p>Google</p>
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- CADASTRO -->
+  <div class="form-container register-container">
+    <form>
+      <h1 class="titulo">Cadastro</h1>
+
+      <div class="campo">
+        <input type="text" placeholder="Nome completo" required>
+      </div>
+
+      <div class="campo">
+        <input type="email" placeholder="E-mail" required>
+      </div>
+
+      <div class="campo">
+        <input type="password" placeholder="Senha" required>
+      </div>
+
+      <button type="submit" class="entrar">Cadastrar</button>
+
+      <div class="divisor">ou</div>
+
+      <div class="login-social">
+        <button class="facebook">
+          <i class="fab fa-facebook-f"></i> Facebook
+        </button>
+
+        <button class="google">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 48 48">
+                <path fill="#EA4335" d="M24 9.5c3.54 0 6.74 1.22 9.27 3.6l6.91-6.91C36.09 2.77 30.39 0 24 0 14.64 0 6.4 5.3 2.56 13.05l8.24 6.4C12.64 12.55 17.88 9.5 24 9.5z"/>
+                <path fill="#4285F4" d="M46.5 24c0-1.57-.14-3.08-.4-4.5H24v9.03h12.68c-.55 2.96-2.2 5.47-4.68 7.15l7.27 5.66C43.33 37.02 46.5 30.98 46.5 24z"/>
+                <path fill="#FBBC05" d="M11.8 28.45c-.48-1.44-.75-2.97-.75-4.55s.27-3.11.75-4.55l-8.24-6.4C1.38 15.48 0 19.58 0 24s1.38 8.52 3.56 11.55l8.24-6.4z"/>
+                <path fill="#34A853" d="M24 48c6.48 0 11.92-2.13 15.89-5.79l-7.27-5.66c-2.04 1.38-4.65 2.2-8.62 2.2-6.12 0-11.36-3.05-14.2-7.95l-8.24 6.4C6.4 42.7 14.64 48 24 48z"/>
+                <path fill="none" d="M0 0h48v48H0z"/>
+            </svg>
+            <p>Google</p>
+        </button>
+      </div>
+    </form>
+  </div>
+
+<!-- PAINEL AZUL -->
+<div class="overlay-container" id="overlayContainer">
+  <a href="index.html" class="home-btn">
+    <i class="fa fa-house"></i> Home
+  </a>
+
+  <h2 id="overlayTitle">Bem-vindo!</h2>
+  <p id="overlayText">Faça login ou crie sua conta para continuar.</p>
+
+  <!-- BOTÃO VISÍVEL DO PAINEL AZUL -->
+  <button id="toggleBtn" class="overlay-btn">Cadastre-se</button>
+</div>
+
+
+</div>
+
+<script>
+  const container = document.getElementById("container");
+  const toggleBtn = document.getElementById("toggleBtn");
+  const goToRegister = document.getElementById("goToRegister");
+  const goToLogin = document.getElementById("goToLogin");
+
+  // Se os links existirem, ativamos eles; evitamos erro se não existir
+  if (goToRegister) goToRegister.addEventListener("click", (e) => {
+    e.preventDefault();
+    container.classList.add("active");
+    // atualizar texto do painel se quiser
+    document.getElementById("overlayTitle").textContent = "Bem-vindo de volta!";
+    document.getElementById("overlayText").textContent = "Já tem uma conta?";
+    toggleBtn.textContent = "Login";
+  });
+
+  if (goToLogin) goToLogin.addEventListener("click", (e) => {
+    e.preventDefault();
+    container.classList.remove("active");
+    document.getElementById("overlayTitle").textContent = "Bem-vindo!";
+    document.getElementById("overlayText").textContent = "Faça login ou crie sua conta para continuar.";
+    toggleBtn.textContent = "Cadastre-se";
+  });
+
+  // Botão grande no painel azul
+  if (toggleBtn) toggleBtn.addEventListener("click", () => {
+    const isActive = container.classList.toggle("active");
+    if (isActive) {
+      document.getElementById("overlayTitle").textContent = "Bem-vindo de volta!";
+      document.getElementById("overlayText").textContent = "Já tem uma conta?";
+      toggleBtn.textContent = "Login";
+    } else {
+      document.getElementById("overlayTitle").textContent = "Bem-vindo!";
+      document.getElementById("overlayText").textContent = "Faça login ou crie sua conta para continuar.";
+      toggleBtn.textContent = "Cadastre-se";
+    }
+  });
+
+  // Query string ?mode=register (mantém comportamento anterior)
+  const params = new URLSearchParams(window.location.search);
+  if (params.get("mode") === "register") {
+    container.classList.add("active");
+    document.getElementById("overlayTitle").textContent = "Bem-vindo de volta!";
+    document.getElementById("overlayText").textContent = "Já tem uma conta?";
+    toggleBtn.textContent = "Login";
+  }
+</script>
+
+</body>
+</html>

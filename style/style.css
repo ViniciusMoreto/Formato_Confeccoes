@@ -18,6 +18,10 @@
     box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
     font-family: var(--font-family);
     background-color: var(--cinza-claro);
@@ -268,7 +272,7 @@ header ul {
 
 .beneficios-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 25px;
 }
 
@@ -412,18 +416,288 @@ header ul {
   transform: scale(1.1);
 }
 
-/* RESPONSIVO */
+.whatsapp_btn {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    width: 55px;
+    height: 55px;
+    z-index: 99999;
+}
+
+.whatsapp_btn:hover {
+    transform: scale(1.05);
+    transition: transform 0.5s ease;
+}
+
+/* Responsividade */
+
+@media (min-width: 1025px) {
+  .container img {
+    height: 600px; 
+  }
+
+  .container_principal h1 {
+    font-size: 36px;
+  }
+
+  .card h1 {
+    font-size: 18px;
+  }
+
+  .card p {
+    font-size: 14px;
+  }
+
+  .card span {
+    font-size: 13px;
+  }
+
+  .btn_ver_todos {
+    width: 220px;
+    height: 45px;
+    font-size: 14px;
+  }
+
+  .beneficios h2 {
+    font-size: 2.2rem;
+  }
+
+  .beneficio h3 {
+    font-size: 1.3rem;
+  }
+
+  .beneficio p {
+    font-size: 1rem;
+  }
+
+  .footer-container {
+    max-width: 1400px; /* mantém o conteúdo centralizado */
+    padding: 60px 5%;
+    gap: 50px;
+  }
+
+  .footer-col h3 {
+    font-size: 18px;
+  }
+
+  .footer-col p,
+  .footer-col ul li {
+    font-size: 15px;
+  }
+
+  .pagamentos-icones i {
+    font-size: 32px;
+  }
+}
+
+@media (max-width: 1024px) {
+  header {
+    height: 70px;
+    padding: 0 1rem;
+  }
+
+  header img {
+    width: 110px;
+    margin-left: 1rem;
+  }
+
+  header nav {
+    gap: 15px;
+  }
+
+  header a {
+    font-size: 16px;
+  }
+
+  .container img {
+    height: 400px;
+  }
+
+  .container_principal h1 {
+    font-size: 28px;
+  }
+
+  .card h1 {
+    font-size: 15px;
+  }
+
+  .card p {
+    font-size: 12px;
+  }
+
+  .card span {
+    font-size: 11px;
+  }
+
+  .btn_ver_todos {
+    width: 180px;
+    height: 38px;
+    font-size: 13px;
+  }
+
+  .beneficios h2 {
+    font-size: 1.8rem;
+  }
+
+  .beneficio h3 {
+    font-size: 1.1rem;
+  }
+
+  .beneficio p {
+    font-size: 0.9rem;
+  }
+
+  .footer-container {
+    padding: 40px 3%;
+    gap: 25px;
+  }
+
+  .footer-col h3 {
+    font-size: 16px;
+  }
+
+  .footer-col p, .footer-col ul li {
+    font-size: 13px;
+  }
+}
 
 @media (max-width: 768px) {
-  .footer-container {
+  header {
+    height: auto;
+    padding: 10px 1rem;
+  }
+
+  header nav {
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 5px;
+  }
+
+  header ul {
+    margin-right: 0;
+  }
+
+  .container img {
+    height: 300px;
+  }
+
+  .container_principal {
+    padding: 40px 3%;
+  }
+
+  .container_principal h1 {
+    font-size: 24px;
     text-align: center;
   }
 
-  .footer-col {
-    align-items: center;
+  .container_card {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 15px;
   }
 
-  .footer-col ul li {
-    justify-content: center;
+  .card {
+    padding: 12px;
+  }
+
+  .card .btn-detalhe {
+    font-size: 12px;
+    padding: 6px;
+  }
+
+  .btn_ver_todos {
+    width: 160px;
+    height: 36px;
+    font-size: 12px;
+  }
+
+  .beneficios {
+    padding: 40px 3%;
+  }
+
+  .beneficios h2 {
+    font-size: 1.6rem;
+  }
+
+  .beneficio {
+    padding: 20px 15px;
+  }
+
+  .beneficio h3 {
+    font-size: 1rem;
+  }
+
+  .beneficio p {
+    font-size: 0.85rem;
+  }
+
+  .footer-container {
+    padding: 30px 3%;
+    gap: 20px;
+  }
+
+  .footer-col h3 {
+    font-size: 15px;
+  }
+
+  .footer-col p, .footer-col ul li {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+
+  header {
+    flex-direction: column;
+  }
+
+  .container {
+    padding-top: 130px;
+  }
+  
+  .container img {
+    height: 220px;
+  }
+
+  .container_principal h1 {
+    font-size: 20px;
+  }
+
+  .card h1 {
+    font-size: 14px;
+  }
+
+  .card p {
+    font-size: 11px;
+  }
+
+  .card span {
+    font-size: 10px;
+  }
+
+  .btn_ver_todos {
+    width: 140px;
+    height: 34px;
+    font-size: 11px;
+  }
+
+  .beneficios h2 {
+    font-size: 1.4rem;
+  }
+
+  .beneficio h3 {
+    font-size: 0.95rem;
+  }
+
+  .beneficio p {
+    font-size: 0.8rem;
+  }
+
+  .footer-col h3 {
+    font-size: 14px;
+  }
+
+  .footer-col p, .footer-col ul li {
+    font-size: 11px;
   }
 }
