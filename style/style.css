@@ -33,7 +33,7 @@ header {
     justify-content: space-between;
     align-items: center;
     background-color: var(--branco);
-    border-bottom: 1px solid var(--azul-principal);
+    z-index: 99999;
 }
 
 header img {
@@ -53,6 +53,27 @@ header nav {
     gap: 20px;
 }
 
+.links_header a {
+    position: relative;
+    padding-bottom: 3px;     /* espaço para a linha */
+    text-decoration: none;
+}
+
+.links_header a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--amarelo-principal);
+    transition: width 0.5s ease-in-out;
+}
+
+.links_header a:hover::after {
+    width: 100%;
+}
+
 header a {
     text-decoration: none;
     color: var(--azul-principal);
@@ -61,7 +82,8 @@ header a {
 }
 
 header a:hover {
-    color: var(--azul-secundario);
+    color: var(--amarelo-principal);
+    transition: color 0.4s ease-in-out;
 }
 
 ul {
@@ -80,6 +102,29 @@ header ul {
     margin-right: 2rem;
 }
 
+.login {
+    width: 70px;
+    height: 32px;
+    border-radius: 10px;
+    background-color: var(--azul-principal);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login:hover {
+    background-color: var(--azul-secundario);
+}
+
+.login a {
+    color: var(--branco);
+    padding: 5px 13px;
+}
+
+.login a:hover {
+    color: var(--branco);
+}
+
 /* Conteudo Principal */
 
 .container {
@@ -92,10 +137,6 @@ header ul {
     object-fit: cover;
 }
 
-/* =========================
-   SEÇÃO PRINCIPAL – PRODUTOS
-========================= */
-
 .container_principal {
     padding: 60px 5%;
     background-color: var(--cinza-claro);
@@ -107,7 +148,7 @@ header ul {
     font-size: 32px;
 }
 
-/* GRID DE CARDS */
+/* Cards */
 
 .container_card {
     display: grid;
@@ -117,18 +158,34 @@ header ul {
 
 .card {
     background-color: var(--branco);
-    border-radius: 10px;
-    padding: 15px;
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
     display: flex;
     flex-direction: column;
     gap: 8px;
-    transition: transform 0.3s ease;
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+    cursor: default;
 }
 
-.card img {
-    width: 100%;
-    height: 140px;
+.card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+}
+
+.img_card {
+      height: 100px;
+  background: #f7f7f7;        /* base visual */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  margin-bottom: 15px;
+}
+
+.img_card img {
+    max-height: 80%;
+    max-width: 80%;
     object-fit: contain;
 }
 
@@ -148,7 +205,7 @@ header ul {
     font-weight: 500;
 }
 
-/* BOTÕES */
+/* Botões */
 
 .card .botoes {
     display: flex;
@@ -156,7 +213,6 @@ header ul {
     margin-top: 8px;
 }
 
-/* BOTÃO VER DETALHE (LINK) */
 .card .btn-detalhe {
     flex: 1;
     background-color: var(--azul-principal);
@@ -170,4 +226,204 @@ header ul {
 
 .card .btn-detalhe:hover {
     background-color: var(--azul-secundario);
+}
+
+.botao_ver_produtos {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.btn_ver_todos {
+    width: 200px;
+    height: 40px;
+    background-color: var(--azul-principal);
+    color: var(--branco);
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+}
+
+.btn_ver_todos:hover {
+    background-color: var(--azul-secundario);
+    transform: translateY(-2px);
+    transition: all 0.3s ease;
+}
+
+.beneficios {
+  padding: 60px 5%;
+  background-color: var(--cinza-claro);
+  cursor: default;
+}
+
+.beneficios h2 {
+  text-align: center;
+  font-size: 2rem;
+  color: var(--azul-principal);
+  margin-bottom: 40px;
+}
+
+.beneficios-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 25px;
+}
+
+/* CARD */
+.beneficio {
+  background-color: var(--branco);
+  border-radius: 12px;
+  padding: 30px 20px;
+  text-align: center;
+  border: 1px solid #e5e5e5;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Hover elegante */
+.beneficio:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+/* Ícone */
+.beneficio i {
+  font-size: 2.4rem;
+  color: var(--azul-principal);
+  margin-bottom: 15px;
+}
+
+/* Título */
+.beneficio h3 {
+  font-size: 1.2rem;
+  color: var(--azul-principal);
+  margin-bottom: 10px;
+}
+
+/* Texto */
+.beneficio p {
+  font-size: 0.95rem;
+  color: var(--cinza-escuro);
+  line-height: 1.5;
+}
+
+/* FOOTER */
+
+.footer {
+  background-color: var(--azul-principal);
+  color: var(--branco);
+  margin-top: 80px;
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 50px 5%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 40px;
+}
+
+.footer-col {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.footer-col h3 {
+  font-size: 17px;
+  color: var(--amarelo-principal);
+}
+
+.footer-col p {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #eaeaea;
+}
+
+.footer-col ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.footer-col ul li {
+  font-size: 14px;
+  color: #eaeaea;
+  display: flex;
+  align-items: center;
+}
+
+.footer-col ul li i {
+  margin-right: 8px;
+  color: var(--amarelo-principal);
+}
+
+.footer-col ul li a {
+  text-decoration: none;
+  color: #eaeaea;
+  transition: color 0.3s ease;
+}
+
+.footer-col ul li a:hover {
+  color: var(--amarelo-principal);
+}
+
+/* Parte inferior */
+
+.footer-bottom {
+  background-color: var(--azul-secundario);
+  text-align: center;
+  padding: 15px 10px;
+}
+
+.footer-bottom p {
+  font-size: 13px;
+  color: #f1f1f1;
+}
+
+/* FORMAS DE PAGAMENTO */
+
+.pagamentos-col h3 {
+  text-align: center;
+}
+
+.pagamentos-icones {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
+  margin: 12px 0;
+  flex-wrap: wrap;
+}
+
+.pagamentos-icones i {
+  font-size: 28px;
+  color: #eaeaea;
+  transition: transform 0.2s ease;
+}
+
+.pagamentos-icones i:hover {
+  transform: scale(1.1);
+}
+
+/* RESPONSIVO */
+
+@media (max-width: 768px) {
+  .footer-container {
+    text-align: center;
+  }
+
+  .footer-col {
+    align-items: center;
+  }
+
+  .footer-col ul li {
+    justify-content: center;
+  }
 }
