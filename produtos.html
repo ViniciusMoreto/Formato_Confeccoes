@@ -16,6 +16,28 @@
     <title>Formato Confecções</title>
   </head>
   <body>
+    <!-- CARRINHO LATERAL -->
+    <div class="cart-overlay" id="cartOverlay"></div>
+
+    <aside class="cart-drawer" id="cartDrawer">
+      <header class="cart-header">
+        <h2>Meu Carrinho</h2>
+        <button id="closeCart">&times;</button>
+      </header>
+
+      <div class="cart-items" id="cartItems">
+        <div class="cart-empty">
+          <i class="fa-solid fa-cart-shopping"></i>
+          <p>Seu carrinho está vazio</p>
+          <span>Adicione produtos para continuar</span>
+        </div>
+      </div>
+
+      <footer class="cart-footer">
+        <p id="cartTotal">Total: R$ 0,00</p>
+        <button class="btn-finalizar">Finalizar pedido</button>
+      </footer>
+    </aside>
     <header>
       <a href="./index.html">
         <img
@@ -32,10 +54,13 @@
 
       <ul>
         <li class="login">
-          <a href="#">Login</a>
+          <a href="./login.html">Login</a>
         </li>
-        <li>
-          <a href="#"><i class="fa-solid fa-cart-shopping"></i></a>
+        <li class="cart-icon">
+          <button id="openCart" aria-label="Abrir carrinho">
+            <i class="fa-solid fa-cart-shopping"></i>
+            <span class="cart-count">0</span>
+          </button>
         </li>
       </ul>
     </header>
@@ -524,6 +549,7 @@
       </div>
     </footer>
 
+    <script src="./js/carrinho.js"></script>
     <script>
       const buttons = document.querySelectorAll(".filtros button");
       const cards = document.querySelectorAll(".card");

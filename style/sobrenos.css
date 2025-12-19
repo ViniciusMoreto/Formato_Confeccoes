@@ -103,8 +103,8 @@ header ul {
 }
 
 .login {
-    width: 70px;
-    height: 32px;
+    width: 100px;
+    height: 37px;
     border-radius: 10px;
     background-color: var(--azul-principal);
     display: flex;
