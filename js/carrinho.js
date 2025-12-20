@@ -46,19 +46,47 @@ function renderCarrinho() {
     total += item.preco * item.quantidade;
 
     itens.innerHTML += `
-      <div class="cart-item">
-        <img src="${item.imagem}">
-        <div>
-          <h4>${item.nome}</h4>
-          <p>Qtd: ${item.quantidade}</p>
-          <p>R$ ${(item.preco * item.quantidade).toFixed(2)}</p>
-          <button onclick="removerDoCarrinho('${item.id}')">Remover</button>
-        </div>
+  <div class="cart-item">
+    <img src="${item.imagem}">
+    <div>
+      <h4>${item.nome}</h4>
+      <p>Tamanho: ${item.tamanho}</p>
+
+      <div class="cart-qty">
+        <button onclick="alterarQuantidade('${item.id}', -1)">−</button>
+        <span>${item.quantidade}</span>
+        <button onclick="alterarQuantidade('${item.id}', 1)">+</button>
+
+        <button class="cart-remove" onclick="removerDoCarrinho('${item.id}')">
+          <i class="fa-solid fa-trash"></i>
+        </button>
       </div>
-    `;
+
+      <p>R$ ${(item.preco * item.quantidade).toFixed(2)}</p>
+    </div>
+  </div>
+`;
   });
 
   totalEl.textContent = `Total: R$ ${total.toFixed(2)}`;
+}
+
+// Quantidade
+
+function alterarQuantidade(id, delta) {
+  const carrinho = getCarrinho();
+  const item = carrinho.find((i) => i.id === id);
+
+  if (!item) return;
+
+  item.quantidade += delta;
+
+  if (item.quantidade <= 0) {
+    removerDoCarrinho(id);
+    return;
+  }
+
+  salvarCarrinho(carrinho);
 }
 
 // ABRIR / FECHAR

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Uniformes escolares com qualidade, conforto e padronização. Conheça a Formato Confecções e nossos modelos mais procurados."
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    />
+    <link rel="stylesheet" href="./style/produtodetalhe.css" />
+    <title>Produto | Formato Confecções</title>
+  </head>
+  <body>
+    <!-- CARRINHO LATERAL -->
+    <div class="cart-overlay" id="cartOverlay"></div>
+
+    <aside class="cart-drawer" id="cartDrawer">
+      <header class="cart-header">
+        <h2>Meu Carrinho</h2>
+        <button id="closeCart">&times;</button>
+      </header>
+
+      <div class="cart-items" id="cartItems">
+        <div class="cart-empty">
+          <i class="fa-solid fa-cart-shopping"></i>
+          <p>Seu carrinho está vazio</p>
+          <span>Adicione produtos para continuar</span>
+        </div>
+      </div>
+
+      <footer class="cart-footer">
+        <p id="cartTotal">Total: R$ 0,00</p>
+        <button class="btn-finalizar">Finalizar pedido</button>
+      </footer>
+    </aside>
+    <header>
+      <a href="./index.html">
+        <img
+          src="./img/Logo_Formato_Confeccoes.webp"
+          alt="Logo Formato Confecções"
+        />
+      </a>
+
+      <nav class="links_header">
+        <a href="./index.html">Inicio</a>
+        <a href="./produtos.html">Produtos</a>
+        <a href="./sobrenos.html">Sobre Nós</a>
+      </nav>
+
+      <ul>
+        <li class="login">
+          <a href="./login.html">Login</a>
+        </li>
+        <li class="cart-icon">
+          <button id="openCart" aria-label="Abrir carrinho">
+            <i class="fa-solid fa-cart-shopping"></i>
+            <span class="cart-count">0</span>
+          </button>
+        </li>
+      </ul>
+    </header>
+    <main class="produto-container">
+      <!-- GALERIA -->
+      <section class="produto-galeria">
+        <div class="miniaturas" id="miniaturas"></div>
+
+        <div class="imagem-principal">
+          <img id="imagemPrincipal" src="" alt="" />
+        </div>
+      </section>
+
+      <!-- INFO -->
+      <section class="produto-info">
+        <h1 id="produtoNome"></h1>
+        <p class="produto-categoria" id="produtoCategoria"></p>
+
+        <div class="produto-preco" id="produtoPreco"></div>
+
+        <p class="parcelamento">Parcelamento disponível via Pix ou cartão</p>
+
+        <h3>Selecione um tamanho</h3>
+        <div class="tamanhos" id="tamanhos"></div>
+
+        <button class="btn-carrinho">Adicionar ao carrinho</button>
+      </section>
+    </main>
+
+    <!-- DESCRIÇÃO -->
+    <section class="descricao-produto">
+      <div class="descricao-texto">
+        <h2>Descrição do produto</h2>
+        <p id="produtoDescricao"></p>
+      </div>
+
+      <div class="descricao-grid">
+        <div class="descricao-beneficios">
+          <h3>Benefícios</h3>
+          <ul id="produtoDetalhes"></ul>
+        </div>
+
+        <div class="descricao-ficha" id="fichaTecnica"></div>
+      </div>
+    </section>
+
+    <script src="./js/produtodetalhe.js"></script>
+    <script src="./js/carrinho.js"></script>
+    <script>
+      const btnCarrinho = document.querySelector(".btn-carrinho");
+
+      btnCarrinho.addEventListener("click", () => {
+        if (!tamanhoSelecionado || precoSelecionado === null) {
+          alert("Selecione um tamanho antes de adicionar ao carrinho.");
+          return;
+        }
+
+        adicionarAoCarrinho({
+          id: `${id}-${tamanhoSelecionado}`,
+          nome: produto.nome,
+          preco: precoSelecionado,
+          imagem: produto.imagens[0],
+          tamanho: tamanhoSelecionado,
+        });
+      });
+    </script>
+  </body>
+</html>
