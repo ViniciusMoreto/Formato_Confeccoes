@@ -238,6 +238,20 @@ input:focus {
     opacity: 0;
 }
 
+.whatsapp_btn {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    width: 55px;
+    height: 55px;
+    z-index: 99999;
+}
+
+.whatsapp_btn:hover {
+    transform: scale(1.05);
+    transition: transform 0.5s ease;
+}
+
 /* RESPONSIVIDADE */
 @media (max-width: 800px) {
     .container {

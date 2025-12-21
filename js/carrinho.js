@@ -133,3 +133,18 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+  const btnFinalizar = document.querySelector(".btn-finalizar");
+
+  btnFinalizar?.addEventListener("click", () => {
+    const carrinho = getCarrinho();
+
+    if (carrinho.length === 0) {
+      alert("Seu carrinho está vazio.");
+      return;
+    }
+
+    window.location.href = "checkout.html";
+  });
+});
