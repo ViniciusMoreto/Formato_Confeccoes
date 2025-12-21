@@ -145,6 +145,6 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    window.location.href = "checkout.html";
+    window.location.href = "abapagamento.html";
   });
 });

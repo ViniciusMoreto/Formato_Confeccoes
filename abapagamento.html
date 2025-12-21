@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <title>Checkout</title>
+  <link rel="stylesheet" href="./style/abapagamento.css" />
+</head>
+<body>
+
+<main class="split">
+
+  <!-- COLUNA ESQUERDA — CARRINHO -->
+  <aside class="cart">
+    <h2>Seu carrinho</h2>
+
+    <div id="lista-carrinho" class="lista-carrinho"></div>
+
+    <div class="cart-total">
+      <span>Total</span>
+      <strong>R$ <span id="total">0,00</span></strong>
+    </div>
+  </aside>
+
+  <!-- COLUNA DIREITA — CHECKOUT -->
+  <section class="checkout">
+    <h2>Finalizar compra</h2>
+
+    <div class="card">
+      <h3>Dados do cliente</h3>
+      <div class="grid-2">
+        <input id="nome" placeholder="Nome completo">
+        <input id="cpf" placeholder="CPF">
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Endereço</h3>
+      <div class="grid-2">
+        <input id="rua" placeholder="Rua">
+        <input id="numero" placeholder="Número">
+      </div>
+      <div class="grid-2">
+        <input id="bairro" placeholder="Bairro">
+        <input id="cidade" placeholder="Cidade">
+      </div>
+      <div class="grid-2">
+        <input id="estado" placeholder="Estado">
+        <input id="cep" placeholder="CEP">
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Pagamento</h3>
+      <div class="pagamento-opcoes">
+        <label class="opcao">
+          <input type="radio" name="pagamento" value="pix">
+          <span>Pix</span>
+        </label>
+        <label class="opcao">
+          <input type="radio" name="pagamento" value="cartao">
+          <span>Cartão</span>
+        </label>
+      </div>
+      <div id="area-pagamento"></div>
+    </div>
+
+    <button id="continuar" class="btn">Continuar</button>
+  </section>
+
+</main>
+
+<script src="./js/abapagamento.js"></script>
+</body>
+</html>
