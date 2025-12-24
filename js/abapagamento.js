@@ -1,62 +1,84 @@
-let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [
-  {
-    id: 1,
-    nome: "Camisa Escolar",
-    tamanho: "M",
-    preco: 59.9,
-    qtd: 2,
-    imagem: "https://via.placeholder.com/100"
-  }
-];
+const CART_KEY = "formato_carrinho";
+
+function getCarrinho() {
+  return JSON.parse(localStorage.getItem(CART_KEY)) || [];
+}
 
 const lista = document.getElementById("lista-carrinho");
 const totalEl = document.getElementById("total");
 
-function renderCarrinho() {
+function renderCheckoutCarrinho() {
+  if (!lista) return;
+
+  const carrinho = getCarrinho();
   lista.innerHTML = "";
   let total = 0;
 
-  carrinho.forEach((p, i) => {
-    total += p.preco * p.qtd;
+  if (carrinho.length === 0) {
+    lista.innerHTML = "<p>Seu carrinho está vazio</p>";
+    totalEl.textContent = "0,00";
+    return;
+  }
+
+  carrinho.forEach((item) => {
+    total += item.preco * item.quantidade;
 
     lista.innerHTML += `
-      <div class="item">
-        <img src="${p.imagem}">
-        <div class="item-info">
-          <strong>${p.nome}</strong>
-          <span>Tam: ${p.tamanho}</span>
-          <div class="qtd">
-            <button onclick="alterarQtd(${i}, -1)">-</button>
-            <span>${p.qtd}</span>
-            <button onclick="alterarQtd(${i}, 1)">+</button>
+      <div class="cart-item">
+        <img src="${item.imagem}">
+        <div>
+          <h4>${item.nome}</h4>
+          <p>Tamanho: ${item.tamanho}</p>
+
+          <div class="cart-qty">
+            <button onclick="alterarQuantidadeCheckout('${item.id}', -1)">−</button>
+            <span>${item.quantidade}</span>
+            <button onclick="alterarQuantidadeCheckout('${item.id}', 1)">+</button>
+
+            <button class="cart-remove" onclick="removerItemCheckout('${item.id}')">
+              <i class="fa-solid fa-trash"></i>
+            </button>
           </div>
-          <div class="remover" onclick="removerItem(${i})">Remover</div>
+
+          <p>R$ ${(item.preco * item.quantidade).toFixed(2)}</p>
         </div>
-        <strong>R$ ${(p.preco * p.qtd).toFixed(2)}</strong>
       </div>
     `;
   });
 
   totalEl.textContent = total.toFixed(2);
-  localStorage.setItem("carrinho", JSON.stringify(carrinho));
 }
 
-function alterarQtd(index, delta) {
-  carrinho[index].qtd += delta;
-  if (carrinho[index].qtd < 1) carrinho[index].qtd = 1;
-  renderCarrinho();
+function alterarQuantidadeCheckout(id, delta) {
+  const carrinho = getCarrinho();
+  const item = carrinho.find((i) => i.id === id);
+
+  if (!item) return;
+
+  item.quantidade += delta;
+
+  if (item.quantidade <= 0) {
+    removerItemCheckout(id);
+    return;
+  }
+
+  localStorage.setItem(CART_KEY, JSON.stringify(carrinho));
+  renderCheckoutCarrinho();
 }
 
-function removerItem(index) {
-  carrinho.splice(index, 1);
-  renderCarrinho();
+function removerItemCheckout(id) {
+  const carrinho = getCarrinho().filter((i) => i.id !== id);
+  localStorage.setItem(CART_KEY, JSON.stringify(carrinho));
+  renderCheckoutCarrinho();
 }
 
-renderCarrinho();
+document.addEventListener("DOMContentLoaded", () => {
+  renderCheckoutCarrinho();
+});
 
 /* PAGAMENTO */
 const area = document.getElementById("area-pagamento");
-document.querySelectorAll("input[name='pagamento']").forEach(r => {
+document.querySelectorAll("input[name='pagamento']").forEach((r) => {
   r.addEventListener("change", () => {
     if (r.value === "pix") {
       area.innerHTML = `<img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=PIX_SIMULADO">`;

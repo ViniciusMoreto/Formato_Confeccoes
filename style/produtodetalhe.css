@@ -654,3 +654,181 @@ header ul {
   background: rgba(0, 0, 0, 0.45);
   backdrop-filter: blur(2px);
 }
+
+/* Responsividade */
+
+@media (min-width: 1025px) {
+  .produto-container {
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 1024px) {
+  header {
+    height: 70px;
+    padding: 0 1rem;
+  }
+
+  header img {
+    width: 110px;
+    margin-left: 1rem;
+  }
+
+  header nav {
+    gap: 15px;
+  }
+
+  header a {
+    font-size: 16px;
+  }
+
+  .produto-container {
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+    padding: 100px 24px 0;
+  }
+
+  .imagem-principal img {
+    max-width: 380px;
+  }
+
+  .descricao-produto {
+    padding: 32px;
+    margin: 50px 20px;
+  }
+
+  .descricao-grid {
+    gap: 30px;
+  }
+}
+
+@media (max-width: 768px) {
+  header {
+    height: auto;
+    padding: 10px 1rem;
+  }
+
+  header nav {
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 5px;
+  }
+
+  header ul {
+    margin-right: 0;
+  }
+
+  .produto-container {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    padding: 90px 16px 0;
+  }
+
+  .produto-galeria {
+    flex-direction: column-reverse;
+    align-items: center;
+  }
+
+  .miniaturas {
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .imagem-principal {
+    padding: 24px;
+  }
+
+  .produto-info h1 {
+    font-size: 26px;
+  }
+
+  .produto-preco {
+    font-size: 24px;
+  }
+
+  .descricao-produto {
+    padding: 24px;
+    margin: 40px 16px;
+  }
+
+  .descricao-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  /* Carrinho */
+  .cart-drawer {
+    width: 100%;
+    right: -100%;
+  }
+
+  .cart-drawer.active {
+    right: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    font-size: 14px;
+  }
+
+  header {
+    flex-direction: column;
+  }
+
+  .produto-container {
+    padding-top: 180px;
+  }
+
+  .produto-info h1 {
+    font-size: 22px;
+  }
+
+  .produto-categoria {
+    font-size: 13px;
+  }
+
+  .produto-preco {
+    font-size: 22px;
+  }
+
+  .parcelamento {
+    font-size: 13px;
+  }
+
+  .tamanhos {
+    gap: 8px;
+  }
+
+  .tamanhos button {
+    min-width: 44px;
+    padding: 8px 0;
+    font-size: 13px;
+  }
+
+  .btn-carrinho {
+    padding: 14px;
+    font-size: 15px;
+  }
+
+  .imagem-principal img {
+    max-width: 300px;
+  }
+
+  .descricao-produto h2 {
+    font-size: 20px;
+  }
+
+  .descricao-beneficios li {
+    font-size: 13px;
+  }
+
+  /* WhatsApp */
+  .whatsapp_btn {
+    width: 48px;
+    height: 48px;
+    bottom: 20px;
+    right: 20px;
+  }
+}
