@@ -31,11 +31,17 @@ function renderCheckoutCarrinho() {
           <p>Tamanho: ${item.tamanho}</p>
 
           <div class="cart-qty">
-            <button onclick="alterarQuantidadeCheckout('${item.id}', -1)">−</button>
+            <button onclick="alterarQuantidadeCheckout('${
+              item.id
+            }', -1)">−</button>
             <span>${item.quantidade}</span>
-            <button onclick="alterarQuantidadeCheckout('${item.id}', 1)">+</button>
+            <button onclick="alterarQuantidadeCheckout('${
+              item.id
+            }', 1)">+</button>
 
-            <button class="cart-remove" onclick="removerItemCheckout('${item.id}')">
+            <button class="cart-remove" onclick="removerItemCheckout('${
+              item.id
+            }')">
               <i class="fa-solid fa-trash"></i>
             </button>
           </div>
@@ -83,14 +89,61 @@ document.querySelectorAll("input[name='pagamento']").forEach((r) => {
     if (r.value === "pix") {
       area.innerHTML = `<img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=PIX_SIMULADO">`;
     } else {
+      const total = parseFloat(totalEl.textContent.replace(",", "."));
+      const maxParcelas = calcularParcelas(total);
+
+      let opcoesParcelas = "";
+      for (let i = 1; i <= maxParcelas; i++) {
+        const valorParcela = (total / i).toFixed(2);
+        opcoesParcelas += `<option value="${i}">${i}x de R$ ${valorParcela}</option>`;
+      }
+
       area.innerHTML = `
+        <div class="tipo-cartao">
+          <label>
+            <input type="radio" name="tipo-cartao" value="credito">
+            Crédito
+          </label>
+
+          <label>
+            <input type="radio" name="tipo-cartao" value="debito">
+            Débito
+          </label>
+        </div>
+
         <input placeholder="Número do cartão">
         <input placeholder="Nome no cartão">
+
         <div class="grid-2">
           <input placeholder="Validade">
           <input placeholder="CVV">
         </div>
+
+        <div id="parcelamento" style="display:none">
+          <select>
+            ${opcoesParcelas}
+          </select>
+        </div>
       `;
+
+      document.querySelectorAll("input[name='tipo-cartao']").forEach((tipo) => {
+        tipo.addEventListener("change", () => {
+          document.getElementById("parcelamento").style.display =
+            tipo.value === "credito" ? "block" : "none";
+        });
+      });
     }
   });
 });
+
+function calcularParcelas(total) {
+  const valorMinParcela = 20;
+  const maxParcelas = 12;
+
+  let parcelasPossiveis = Math.floor(total / valorMinParcela);
+
+  if (parcelasPossiveis > maxParcelas) parcelasPossiveis = maxParcelas;
+  if (parcelasPossiveis < 1) parcelasPossiveis = 1;
+
+  return parcelasPossiveis;
+}

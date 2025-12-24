@@ -2,6 +2,7 @@
 <html lang="pt-br">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
@@ -10,19 +11,44 @@
     <title>Checkout</title>
   </head>
   <body>
+    <header>
+      <a href="./index.html">
+        <img
+          src="./img/Logo_Formato_Confeccoes.webp"
+          alt="Logo Formato Confecções"
+          loading="lazy"
+        />
+      </a>
+
+      <nav class="links_header">
+        <a href="./index.html" aria-label="Link inicio">Inicio</a>
+        <a href="./produtos.html" aria-label="link produtos">Produtos</a>
+        <a href="./sobrenos.html" aria-label="link sobre nós">Sobre Nós</a>
+      </nav>
+
+      <ul>
+        <li class="login">
+          <a href="./login.html" aria-label="Login do usuário">Login</a>
+        </li>
+      </ul>
+    </header>
     <main class="split">
       <!-- COLUNA ESQUERDA — CARRINHO -->
       <aside class="cart">
-        <h2>Seu carrinho</h2>
-
-        <div id="lista-carrinho" class="lista-carrinho"></div>
+        <button class="cart-toggle" id="cartToggle">
+          <span>Meu carrinho</span>
+          <i class="fa-solid fa-chevron-down"></i>
+        </button>
+        <h2 class="meu_carrinho">Meu carrinho</h2>
+        <div class="cart-content">
+          <div id="lista-carrinho" class="lista-carrinho"></div>
+        </div>
 
         <div class="cart-total">
           <span>Total</span>
           <strong>R$ <span id="total">0,00</span></strong>
         </div>
       </aside>
-
       <!-- COLUNA DIREITA — CHECKOUT -->
       <section class="checkout">
         <h2>Finalizar compra</h2>
@@ -71,6 +97,16 @@
         <button id="continuar" class="btn">Continuar</button>
       </section>
     </main>
-    <script src="./js/abapagamento.js"></script>
+    <script src="./js/abapagamento.js" defer></script>
+    <script>
+      const cart = document.querySelector(".cart");
+      const toggle = document.getElementById("cartToggle");
+
+      if (cart && toggle) {
+        toggle.addEventListener("click", () => {
+          cart.classList.toggle("open");
+        });
+      }
+    </script>
   </body>
 </html>

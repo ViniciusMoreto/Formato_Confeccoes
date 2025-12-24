@@ -824,6 +824,14 @@ header ul {
     font-size: 13px;
   }
 
+   .cart-drawer {
+    padding-top: 3rem;
+  }
+
+  .cart-header {
+    flex-direction: row;
+  }
+
   /* WhatsApp */
   .whatsapp_btn {
     width: 48px;

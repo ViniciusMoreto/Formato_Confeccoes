@@ -833,6 +833,14 @@ header ul {
     align-items: center;
   }
 
+   .cart-drawer {
+    padding-top: 2.5rem;
+  }
+
+  .cart-header {
+    flex-direction: row;
+  }
+
   /* WhatsApp */
   .whatsapp_btn {
     width: 48px;
