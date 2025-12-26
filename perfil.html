@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Uniformes escolares com qualidade, conforto e padronização. Conheça a Formato Confecções e nossos modelos mais procurados."
+    />
+    <meta
+      name="keywords"
+      content="uniformes escolares, camisetas escolares, bermuda escolar, short-saia, uniforme infantil, uniforme educação física, Formato Confecções"
+    />
+    <link rel="canonical" href="https://www.seusite.com.br/" />
+    <link rel="stylesheet" href="./style/style.css" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    />
+    <link rel="stylesheet" href="./style/perfil.css" />
+    <title>Perfil</title>
+  </head>
+  <body>
+    <header>
+      <a href="./index.html">
+        <img
+          src="./img/Logo_Formato_Confeccoes.webp"
+          alt="Logo Formato Confecções"
+          loading="lazy"
+        />
+      </a>
+
+      <nav class="links_header">
+        <a href="./index.html" aria-label="Link inicio">Inicio</a>
+        <a href="./produtos.html" aria-label="link produtos">Produtos</a>
+        <a href="./sobrenos.html" aria-label="link sobre nós">Sobre Nós</a>
+      </nav>
+
+      <ul>
+        <li class="login">
+          <a href="./login.html" aria-label="Login do usuário">Login</a>
+        </li>
+      </ul>
+    </header>
+
+    <main class="perfil">
+      <!-- BLOCO SUPERIOR -->
+      <section class="perfil-topo">
+        <div class="foto-wrapper">
+          <div id="avatar" class="avatar">VM</div>
+
+          <img id="fotoPerfil" alt="Foto do usuário" style="display: none" />
+
+          <label for="fotoInput" class="editar-foto">
+            <i class="fa-solid fa-camera"></i> Editar foto
+            <input type="file" id="fotoInput" accept="image/*" hidden />
+          </label>
+        </div>
+
+        <div class="info-principal">
+          <h1 id="nomeExibido">Nome do Usuário</h1>
+          <p id="emailExibido">email@email.com</p>
+        </div>
+      </section>
+
+      <!-- DADOS -->
+      <section class="card">
+        <label>Nome completo</label>
+        <input id="nome" />
+
+        <label>Email</label>
+        <input id="email" disabled />
+
+        <label>CPF</label>
+        <input id="cpf" />
+
+        <h3>Endereço</h3>
+        <input id="rua" placeholder="Rua" />
+        <input id="numero" placeholder="Número" />
+        <input id="bairro" placeholder="Bairro" />
+        <input id="cidade" placeholder="Cidade" />
+        <input id="estado" placeholder="Estado" />
+        <input id="cep" placeholder="CEP" />
+
+        <button id="salvar">Salvar alterações</button>
+      </section>
+    </main>
+
+    <script>
+      const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
+
+      if (!usuario) {
+        window.location.href = "login.html";
+      }
+
+      /* ===== ELEMENTOS ===== */
+      const nomeInput = document.getElementById("nome");
+      const emailInput = document.getElementById("email");
+      const cpfInput = document.getElementById("cpf");
+
+      const nomeExibido = document.getElementById("nomeExibido");
+      const emailExibido = document.getElementById("emailExibido");
+
+      const foto = document.getElementById("fotoPerfil");
+      const fotoInput = document.getElementById("fotoInput");
+
+      /* ===== TOPO ===== */
+      nomeExibido.textContent = usuario.nome || "";
+      emailExibido.textContent = usuario.email || "";
+
+      /* ===== INPUTS ===== */
+      nomeInput.value = usuario.nome || "";
+      emailInput.value = usuario.email || "";
+      cpfInput.value = usuario.cpf || "";
+
+      /* ===== ENDEREÇO ===== */
+      const camposEndereco = [
+        "rua",
+        "numero",
+        "bairro",
+        "cidade",
+        "estado",
+        "cep",
+      ];
+
+      camposEndereco.forEach((campo) => {
+        document.getElementById(campo).value = usuario[campo] || "";
+      });
+
+      /* ===== FOTO ===== */
+      if (usuario.foto) foto.src = usuario.foto;
+
+      fotoInput.addEventListener("change", (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = () => {
+          usuario.foto = reader.result;
+          foto.src = reader.result;
+          salvarUsuario();
+        };
+        reader.readAsDataURL(file);
+      });
+
+      /* ===== SALVAR ===== */
+      document.getElementById("salvar").addEventListener("click", () => {
+        if (!nomeInput.value.trim()) {
+          alert("Nome é obrigatório");
+          return;
+        }
+
+        usuario.nome = nomeInput.value.trim();
+        usuario.cpf = cpfInput.value.trim();
+
+        camposEndereco.forEach((campo) => {
+          usuario[campo] = document.getElementById(campo).value.trim();
+        });
+
+        salvarUsuario();
+
+        nomeExibido.textContent = usuario.nome;
+        alert("Dados atualizados com sucesso");
+      });
+
+      /* ===== FUNÇÃO CENTRAL ===== */
+      function salvarUsuario() {
+        localStorage.setItem("usuarioLogado", JSON.stringify(usuario));
+
+        const usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
+        const index = usuarios.findIndex((u) => u.email === usuario.email);
+
+        if (index !== -1) {
+          usuarios[index] = usuario;
+          localStorage.setItem("usuarios", JSON.stringify(usuarios));
+        }
+      }
+
+      /* ===== LOGOUT ===== */
+      document.getElementById("logout").addEventListener("click", () => {
+        localStorage.removeItem("usuarioLogado");
+        window.location.href = "login.html";
+      });
+    </script>
+  </body>
+</html>

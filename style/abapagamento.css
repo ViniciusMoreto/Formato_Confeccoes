@@ -831,4 +831,10 @@ input:focus {
     padding: 16px;
     font-size: 15px;
   }
+
+  .opcao input[type="radio"],
+  .tipo-cartao input[type="radio"] {
+    width: 14px;
+    height: 14px;
+  }
 }
