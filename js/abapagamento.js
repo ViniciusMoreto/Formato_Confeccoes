@@ -147,3 +147,56 @@ function calcularParcelas(total) {
 
   return parcelasPossiveis;
 }
+
+document.getElementById("continuar").addEventListener("click", () => {
+  const carrinho = getCarrinho();
+  if (carrinho.length === 0) {
+    alert("Carrinho vazio");
+    return;
+  }
+
+  const metodoPagamento = document.querySelector(
+    "input[name='pagamento']:checked"
+  );
+
+  if (!metodoPagamento) {
+    alert("Selecione uma forma de pagamento");
+    return;
+  }
+
+  // Dados do cliente
+  const pedido = {
+    id: "PED-" + Date.now(),
+    cliente: {
+      nome: document.getElementById("nome").value.trim(),
+      cpf: document.getElementById("cpf").value.trim(),
+    },
+    endereco: {
+      rua: document.getElementById("rua").value.trim(),
+      numero: document.getElementById("numero").value.trim(),
+      bairro: document.getElementById("bairro").value.trim(),
+      cidade: document.getElementById("cidade").value.trim(),
+      estado: document.getElementById("estado").value.trim(),
+      cep: document.getElementById("cep").value.trim(),
+    },
+    produtos: carrinho,
+    total: carrinho.reduce(
+      (soma, p) => soma + p.preco * p.quantidade,
+      0
+    ),
+    pagamento: metodoPagamento.value,
+    status: "Pago",
+    data: new Date().toLocaleDateString("pt-BR"),
+  };
+
+  const pedidos = JSON.parse(localStorage.getItem("pedidos")) || [];
+  pedidos.push(pedido);
+
+  localStorage.setItem("pedidos", JSON.stringify(pedidos));
+
+  // Limpa carrinho após pagamento
+  localStorage.removeItem(CART_KEY);
+
+  alert("Pagamento concluído com sucesso!");
+  window.location.href = "index.html";
+});

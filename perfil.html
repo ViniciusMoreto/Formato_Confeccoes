@@ -70,7 +70,10 @@
         <input id="nome" />
 
         <label>Email</label>
-        <input id="email" disabled />
+        <input id="email"/>
+
+        <label>Senha</label>
+        <input id="senha" disabled/>
 
         <label>CPF</label>
         <input id="cpf" />
@@ -98,6 +101,7 @@
       const nomeInput = document.getElementById("nome");
       const emailInput = document.getElementById("email");
       const cpfInput = document.getElementById("cpf");
+      const senhaInput = document.getElementById("senha");
 
       const nomeExibido = document.getElementById("nomeExibido");
       const emailExibido = document.getElementById("emailExibido");
@@ -113,6 +117,7 @@
       nomeInput.value = usuario.nome || "";
       emailInput.value = usuario.email || "";
       cpfInput.value = usuario.cpf || "";
+      senhaInput.value = usuario.senha || "";
 
       /* ===== ENDEREÇO ===== */
       const camposEndereco = [

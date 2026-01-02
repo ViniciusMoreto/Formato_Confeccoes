@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Painel de Pedidos | Administração</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --azul-principal: #001f7a;
+        --azul-secundario: #0a2d9a;
+        --amarelo-principal: #ffd32a;
+        --amarelo-secundario: #f2c400;
+        --cinza-claro: #f5f5f5;
+        --cinza: #e0e0e0;
+        --cinza-escuro: #333333;
+        --branco: #ffffff;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        background: var(--cinza-claro);
+        color: var(--cinza-escuro);
+        padding: 40px;
+      }
+
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 32px;
+      }
+
+      header h1 {
+        font-size: 28px;
+        font-weight: 700;
+        color: var(--azul-principal);
+      }
+
+      .pedido-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 12px 32px rgba(0,0,0,.06);
+  margin-bottom: 24px;
+}
+
+.pedido-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.status.aprovado {
+  background: #dcfce7;
+  color: #166534;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.pedido-info {
+  display: flex;
+  gap: 24px;
+  margin: 16px 0;
+  color: #333;
+}
+
+.pedido-itens .item {
+  display: flex;
+  gap: 16px;
+  padding: 12px 0;
+  border-top: 1px solid #eee;
+}
+
+.pedido-itens img {
+  width: 64px;
+  border-radius: 8px;
+}
+
+.pedido-acoes {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.btn-azul {
+  background: var(--azul-principal);
+  color: #fff;
+  padding: 10px 18px;
+  border-radius: 8px;
+  border: none;
+}
+
+.btn-vermelho {
+  background: #dc2626;
+  color: #fff;
+  padding: 10px 18px;
+  border-radius: 8px;
+  border: none;
+}
+
+
+      .badge-pendentes {
+        background: var(--amarelo-principal);
+        color: #000;
+        padding: 6px 14px;
+        border-radius: 999px;
+        font-size: 13px;
+        font-weight: 600;
+      }
+
+      .pedidos {
+        display: grid;
+        gap: 24px;
+      }
+
+      .pedido {
+        background: var(--branco);
+        border-radius: 18px;
+        padding: 28px;
+        box-shadow: 0 14px 40px rgba(0, 0, 0, 0.06);
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 24px;
+        border-left: 6px solid var(--cinza);
+      }
+
+      .pedido.pendente {
+        border-color: var(--amarelo-principal);
+      }
+      .pedido.aprovado {
+        border-color: #16a34a;
+      }
+      .pedido.cancelado {
+        border-color: #dc2626;
+      }
+
+      .pedido-info p {
+        font-size: 14px;
+        margin-bottom: 6px;
+      }
+
+      .pedido-info strong {
+        color: var(--azul-principal);
+        font-weight: 600;
+      }
+
+      .status {
+        padding: 6px 16px;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 700;
+        text-transform: uppercase;
+        text-align: center;
+      }
+
+      .status.pendente {
+        background: var(--amarelo-principal);
+        color: #000;
+      }
+
+      .status.aprovado {
+        background: #dcfce7;
+        color: #166534;
+      }
+
+      .status.cancelado {
+        background: #fee2e2;
+        color: #991b1b;
+      }
+
+      .acoes {
+        margin-top: 16px;
+        display: flex;
+        gap: 10px;
+      }
+
+      .acoes button {
+        border: none;
+        padding: 10px 16px;
+        border-radius: 10px;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: transform 0.2s, box-shadow 0.2s;
+      }
+
+      .acoes button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+      }
+
+      .aprovar {
+        background: linear-gradient(
+          135deg,
+          var(--azul-principal),
+          var(--azul-secundario)
+        );
+        color: var(--branco);
+      }
+
+      .cancelar {
+        background: #dc2626;
+        color: var(--branco);
+      }
+
+      .vazio {
+        text-align: center;
+        padding: 80px 20px;
+        color: #666;
+        font-size: 15px;
+      }
+
+      @media (max-width: 768px) {
+        body {
+          padding: 20px;
+        }
+
+        .pedido {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Painel de Pedidos</h1>
+      <span class="badge-pendentes" id="contador"></span>
+    </header>
+
+    <div class="pedido-card">
+      <div class="pedido-header">
+        <div>
+          <h3 class="cliente-nome"></h3>
+          <p class="cliente-email"></p>
+        </div>
+
+        <span class="status aprovado">APROVADO</span>
+      </div>
+
+      <div class="pedido-info">
+        <span><strong>Data:</strong> <span class="pedido-data"></span></span>
+        <span
+          ><strong>Total:</strong> R$ <span class="pedido-total"></span
+        ></span>
+      </div>
+
+      <div class="pedido-itens"></div>
+
+      <div class="pedido-acoes">
+        <button class="btn-azul">Aprovar</button>
+        <button class="btn-vermelho">Cancelar</button>
+      </div>
+    </div>
+
+    <script>
+      const pedidos = JSON.parse(localStorage.getItem("pedidos")) || [];
+      const lista = document.getElementById("listaPedidos");
+      const contador = document.getElementById("contador");
+
+      const pendentes = pedidos.filter((p) => p.status === "pendente").length;
+      contador.textContent = pendentes + " pendentes";
+
+      if (pedidos.length === 0) {
+        lista.innerHTML = '<div class="vazio">Nenhum pedido recebido.</div>';
+      }
+
+      pedidos.forEach((pedido, index) => {
+        const div = document.createElement("div");
+        div.className = `pedido ${pedido.status}`;
+
+        div.innerHTML = `
+        <div class="pedido-info">
+          <p><strong>Cliente:</strong> ${pedido.cliente}</p>
+          <p><strong>Email:</strong> ${pedido.email}</p>
+          <p><strong>Total:</strong> R$ ${pedido.total.toFixed(2)}</p>
+          <p><strong>Data:</strong> ${pedido.data}</p>
+        </div>
+        <div>
+          <span class="status ${pedido.status}">${pedido.status}</span>
+          <div class="acoes">
+            <button class="aprovar" onclick="atualizarStatus(${index}, 'aprovado')">Aprovar</button>
+            <button class="cancelar" onclick="atualizarStatus(${index}, 'cancelado')">Cancelar</button>
+          </div>
+        </div>
+      `;
+
+        lista.appendChild(div);
+      });
+
+      function renderPedidos() {
+        const pedidos = JSON.parse(localStorage.getItem("pedidos")) || [];
+        const container = document.getElementById("lista-pedidos");
+
+        container.innerHTML = "";
+
+        pedidos.forEach((pedido) => {
+          const card = document.createElement("div");
+          card.className = "pedido-card";
+
+          const itensHTML = pedido.itens
+            .map(
+              (item) => `
+      <div class="item">
+        <img src="${item.imagem}">
+        <div>
+          <strong>${item.nome}</strong>
+          <p>Tamanho: ${item.tamanho}</p>
+          <p>Qtd: ${item.quantidade}</p>
+          <p>R$ ${(item.preco * item.quantidade).toFixed(2)}</p>
+        </div>
+      </div>
+    `
+            )
+            .join("");
+
+          card.innerHTML = `
+      <div class="pedido-header">
+        <div>
+          <h3>${pedido.cliente.nome}</h3>
+          <p>${pedido.cliente.email}</p>
+        </div>
+        <span class="status aprovado">APROVADO</span>
+      </div>
+
+      <div class="pedido-info">
+        <span><strong>Data:</strong> ${pedido.data}</span>
+        <span><strong>Total:</strong> R$ ${pedido.total.toFixed(2)}</span>
+      </div>
+
+      <div class="pedido-itens">
+        ${itensHTML}
+      </div>
+
+      <div class="pedido-acoes">
+        <button class="btn-azul">Aprovar</button>
+        <button class="btn-vermelho">Cancelar</button>
+      </div>
+    `;
+
+          container.appendChild(card);
+        });
+      }
+
+      renderPedidos();
+
+      const pedido = {
+        id: Date.now(),
+        data: new Date().toLocaleDateString(),
+        status: "aprovado",
+        total: total,
+        cliente: {
+          nome: nomeInput.value,
+          email: emailUsuario,
+        },
+        itens: carrinho.map((item) => ({
+          nome: item.nome,
+          tamanho: item.tamanho,
+          quantidade: item.quantidade,
+          preco: item.preco,
+          imagem: item.imagem,
+        })),
+      };
+
+      function atualizarStatus(index, status) {
+        pedidos[index].status = status;
+        localStorage.setItem("pedidos", JSON.stringify(pedidos));
+        location.reload();
+      }
+    </script>
+  </body>
+</html>
