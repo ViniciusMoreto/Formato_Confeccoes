@@ -11,19 +11,20 @@
     <title>Login e Cadastro</title>
   </head>
   <body>
+
     <div class="container" id="container">
       <div class="mobile-stack">
         <!-- LOGIN -->
         <div class="form-container login-container">
-          <form>
+          <form id="login">
             <h1 class="titulo">Login</h1>
 
             <div class="campo">
-              <input type="email" placeholder="E-mail" required />
+              <input id="email" type="email" placeholder="E-mail" required />
             </div>
 
             <div class="campo">
-              <input type="password" placeholder="Senha" required />
+              <input id="senha" type="password" placeholder="Senha" required />
             </div>
 
             <div class="opcoes">
@@ -78,19 +79,19 @@
         </a>
         <!-- CADASTRO -->
         <div class="form-container register-container">
-          <form>
+          <form id="cadastro">
             <h1 class="titulo">Cadastro</h1>
 
             <div class="campo">
-              <input type="text" placeholder="Nome completo" required />
+              <input id="nome" type="text" placeholder="Nome completo" required />
             </div>
 
             <div class="campo">
-              <input type="email" placeholder="E-mail" required />
+              <input id="email" type="email" placeholder="E-mail" required />
             </div>
 
             <div class="campo">
-              <input type="password" placeholder="Senha" required />
+              <input id="senha" type="password" placeholder="Senha" required />
             </div>
 
             <button type="submit" class="entrar">Cadastrar</button>
@@ -224,5 +225,10 @@
         toggleBtn.textContent = "Login";
       }
     </script>
+
+    <script src="./login.js"></script>
+
+   
   </body>
+
 </html>
