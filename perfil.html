@@ -19,7 +19,7 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
     />
     <link rel="stylesheet" href="./style/perfil.css" />
-    <title>Perfil</title>
+    <title>Minha Conta</title>
   </head>
   <body>
     <header>
@@ -70,27 +70,47 @@
         <input id="nome" />
 
         <label>Email</label>
-        <input id="email"/>
+        <input id="email" />
 
         <label>Senha</label>
-        <input id="senha" disabled/>
+        <div class="senha-wrapper">
+          <input id="senha" type="password" disabled />
+          <button type="button" class="toggle-senha" id="toggleSenha">
+            <i class="fa-solid fa-eye"></i>
+          </button>
+        </div>
 
         <label>CPF</label>
-        <input id="cpf" />
+        <input id="cpf" disabled/>
 
         <h3>Endereço</h3>
-        <input id="rua" placeholder="Rua" />
-        <input id="numero" placeholder="Número" />
-        <input id="bairro" placeholder="Bairro" />
-        <input id="cidade" placeholder="Cidade" />
-        <input id="estado" placeholder="Estado" />
-        <input id="cep" placeholder="CEP" />
+        <div class="endereco-grid">
+          <input id="rua" placeholder="Rua" />
+          <input id="numero" placeholder="Número" />
+          <input id="bairro" placeholder="Bairro" />
+          <input id="cidade" placeholder="Cidade" />
+          <input id="estado" placeholder="Estado" />
+          <input id="cep" placeholder="CEP" />
+          <input id="complemento" placeholder="Complemento" />
+        </div>
 
-        <button id="salvar">Salvar alterações</button>
+        <button id="salvar">Salvar alterações do perfil</button>
       </section>
     </main>
 
     <script>
+      const toggleSenha = document.getElementById("toggleSenha");
+
+      toggleSenha.addEventListener("click", () => {
+        const isPassword = senhaInput.type === "password";
+
+        senhaInput.type = isPassword ? "text" : "password";
+
+        toggleSenha.innerHTML = isPassword
+          ? '<i class="fa-solid fa-eye-slash"></i>'
+          : '<i class="fa-solid fa-eye"></i>';
+      });
+
       const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
 
       if (!usuario) {
@@ -127,6 +147,7 @@
         "cidade",
         "estado",
         "cep",
+        "complemento",
       ];
 
       camposEndereco.forEach((campo) => {

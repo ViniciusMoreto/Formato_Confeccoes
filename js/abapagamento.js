@@ -79,8 +79,79 @@ function removerItemCheckout(id) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  renderCheckoutCarrinho();
+  /* CPF */
+  const cpfInput = document.getElementById("cpf");
+  const erroCPF = document.getElementById("erro-cpf");
+
+  cpfInput.addEventListener("input", (e) => {
+    let v = e.target.value.replace(/\D/g, "").slice(0, 11);
+    v = v.replace(/^(\d{3})(\d)/, "$1.$2");
+    v = v.replace(/^(\d{3})\.(\d{3})(\d)/, "$1.$2.$3");
+    v = v.replace(/^(\d{3})\.(\d{3})\.(\d{3})(\d)/, "$1.$2.$3-$4");
+    e.target.value = v;
+
+    validarCPFInput();
+  });
+
+  cpfInput.addEventListener("blur", validarCPFInput);
+
+  function validarCPFInput() {
+    if (!cpfInput.value) {
+      limparErro(cpfInput, erroCPF);
+      return;
+    }
+
+    if (!validarCPF(cpfInput.value)) {
+      mostrarErro(cpfInput, erroCPF, "CPF inválido");
+    } else {
+      limparErro(cpfInput, erroCPF);
+    }
+  }
+
+  /* CEP */
+  const cepInput = document.getElementById("cep");
+  const erroCEP = document.getElementById("erro-cep");
+
+  cepInput.addEventListener("input", (e) => {
+    let v = e.target.value.replace(/\D/g, "").slice(0, 8);
+    if (v.length > 5) v = v.replace(/^(\d{5})(\d)/, "$1-$2");
+    e.target.value = v;
+
+    limparErro(cepInput, erroCEP);
+  });
+
+  cepInput.addEventListener("blur", buscarCEP);
+
+  async function buscarCEP() {
+    const cep = cepInput.value.replace(/\D/g, "");
+
+    if (cep.length !== 8 || cep === "00000000") {
+      mostrarErro(cepInput, erroCEP, "CEP inválido");
+      return;
+    }
+
+    try {
+      const res = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+      const data = await res.json();
+
+      if (data.erro) {
+        mostrarErro(cepInput, erroCEP, "CEP não encontrado");
+        return;
+      }
+
+      document.getElementById("rua").value = data.logradouro || "";
+      document.getElementById("bairro").value = data.bairro || "";
+      document.getElementById("cidade").value = data.localidade || "";
+      document.getElementById("estado").value = data.uf || "";
+
+      limparErro(cepInput, erroCEP);
+    } catch {
+      mostrarErro(cepInput, erroCEP, "Erro ao validar CEP");
+    }
+  }
 });
+
+renderCheckoutCarrinho();
 
 /* PAGAMENTO */
 const area = document.getElementById("area-pagamento");
@@ -101,25 +172,25 @@ document.querySelectorAll("input[name='pagamento']").forEach((r) => {
       area.innerHTML = `
         <div class="tipo-cartao">
           <label>
-            <input type="radio" name="tipo-cartao" value="credito">
+            <input type="radio" name="tipo-cartao" value="credito" required>
             Crédito
           </label>
 
           <label>
-            <input type="radio" name="tipo-cartao" value="debito">
+            <input type="radio" name="tipo-cartao" value="debito" required>
             Débito
           </label>
         </div>
 
-        <input placeholder="Número do cartão">
-        <input placeholder="Nome no cartão">
+        <input placeholder="Número do cartão" required>
+        <input placeholder="Nome no cartão" required>
 
         <div class="grid-2">
-          <input placeholder="Validade">
+          <input placeholder="Validade" required>
           <input placeholder="CVV">
         </div>
 
-        <div id="parcelamento" style="display:none">
+        <div id="parcelamento" style="display:none" required>
           <select>
             ${opcoesParcelas}
           </select>
@@ -148,28 +219,94 @@ function calcularParcelas(total) {
   return parcelasPossiveis;
 }
 
-document.getElementById("continuar").addEventListener("click", () => {
+
+const continuarBtn = document.getElementById("continuar");
+const finalizarBtn = document.createElement("button");
+finalizarBtn.textContent = "Finalizar Pagamento";
+finalizarBtn.classList.add("btn");
+finalizarBtn.style.display = "none";
+continuarBtn.insertAdjacentElement("afterend", finalizarBtn); // coloca abaixo do continuar
+
+continuarBtn.addEventListener("click", async (e) => {
+  e.preventDefault();
+
+  // 1️⃣ Erros ativos
+  const errosAtivos = document.querySelectorAll(".erro.ativo");
+  if (errosAtivos.length > 0) {
+    alert("Corrija os campos inválidos antes de continuar.");
+    return;
+  }
+
+  // 2️⃣ Campos obrigatórios
+  const obrigatorios = document.querySelectorAll(
+    "#nome, #cpf, #rua, #numero, #bairro, #cidade, #estado, #cep"
+  );
+  for (const campo of obrigatorios) {
+    if (!campo.value) {
+      campo.focus();
+      alert("Preencha todos os campos obrigatórios antes de continuar.");
+      return;
+    }
+  }
+
+  // 3️⃣ Carrinho vazio
   const carrinho = getCarrinho();
   if (carrinho.length === 0) {
     alert("Carrinho vazio");
     return;
   }
 
-  const metodoPagamento = document.querySelector(
-    "input[name='pagamento']:checked"
-  );
+  // 4️⃣ Mostra métodos de pagamento
+  area.style.display = "block";
+  finalizarBtn.style.display = "block";
+  continuarBtn.disabled = true;
 
+  area.innerHTML = `
+    <label class="opcao">
+      <input type="radio" name="pagamento" value="pix" required />
+      <span>Pix</span>
+    </label>
+
+    <label class="opcao">
+      <input type="radio" name="pagamento" value="cartao" required />
+      <span>Cartão</span>
+    </label>
+
+    <div id="detalhes-cartao" style="display:none; margin-top:10px;">
+      <input placeholder="Número do cartão" required />
+      <input placeholder="Nome no cartão" required />
+      <div class="grid-2">
+        <input placeholder="Validade" required />
+        <input placeholder="CVV" required />
+      </div>
+      <div id="parcelamento" style="display:none;">
+        <select></select>
+      </div>
+    </div>
+  `;
+
+  // Mostra detalhes do cartão quando selecionar cartão
+  document.querySelectorAll("input[name='pagamento']").forEach((tipo) => {
+    tipo.addEventListener("change", () => {
+      const detalhesCartao = document.getElementById("detalhes-cartao");
+      detalhesCartao.style.display = tipo.value === "cartao" ? "block" : "none";
+    });
+  });
+});
+
+finalizarBtn.addEventListener("click", () => {
+  const metodoPagamento = document.querySelector("input[name='pagamento']:checked");
   if (!metodoPagamento) {
-    alert("Selecione uma forma de pagamento");
+    alert("Escolha um método de pagamento antes de finalizar.");
     return;
   }
 
-  // Dados do cliente
+  const carrinho = getCarrinho();
   const pedido = {
     id: "PED-" + Date.now(),
     cliente: {
       nome: document.getElementById("nome").value.trim(),
-      cpf: document.getElementById("cpf").value.trim(),
+      cpf: document.getElementById("cpf").value,
     },
     endereco: {
       rua: document.getElementById("rua").value.trim(),
@@ -177,13 +314,11 @@ document.getElementById("continuar").addEventListener("click", () => {
       bairro: document.getElementById("bairro").value.trim(),
       cidade: document.getElementById("cidade").value.trim(),
       estado: document.getElementById("estado").value.trim(),
-      cep: document.getElementById("cep").value.trim(),
+      cep: document.getElementById("cep").value,
+      complemento: document.getElementById("complemento").value.trim(),
     },
     produtos: carrinho,
-    total: carrinho.reduce(
-      (soma, p) => soma + p.preco * p.quantidade,
-      0
-    ),
+    total: carrinho.reduce((soma, p) => soma + p.preco * p.quantidade, 0),
     pagamento: metodoPagamento.value,
     status: "Pago",
     data: new Date().toLocaleDateString("pt-BR"),
@@ -191,12 +326,59 @@ document.getElementById("continuar").addEventListener("click", () => {
 
   const pedidos = JSON.parse(localStorage.getItem("pedidos")) || [];
   pedidos.push(pedido);
-
   localStorage.setItem("pedidos", JSON.stringify(pedidos));
-
-  // Limpa carrinho após pagamento
   localStorage.removeItem(CART_KEY);
 
   alert("Pagamento concluído com sucesso!");
   window.location.href = "index.html";
 });
+
+function validarCPF(cpf) {
+  cpf = cpf.replace(/\D/g, "");
+  if (cpf.length !== 11 || /^(\d)\1{10}$/.test(cpf)) return false;
+
+  let soma = 0;
+  for (let i = 0; i < 9; i++) soma += cpf[i] * (10 - i);
+  let dig1 = (soma * 10) % 11;
+  if (dig1 === 10) dig1 = 0;
+  if (dig1 != cpf[9]) return false;
+
+  soma = 0;
+  for (let i = 0; i < 10; i++) soma += cpf[i] * (11 - i);
+  let dig2 = (soma * 10) % 11;
+  if (dig2 === 10) dig2 = 0;
+
+  return dig2 == cpf[10];
+}
+
+document.getElementById("cpf").addEventListener("input", (e) => {
+  let v = e.target.value.replace(/\D/g, "").slice(0, 11);
+
+  v = v.replace(/^(\d{3})(\d)/, "$1.$2");
+  v = v.replace(/^(\d{3})\.(\d{3})(\d)/, "$1.$2.$3");
+  v = v.replace(/^(\d{3})\.(\d{3})\.(\d{3})(\d)/, "$1.$2.$3-$4");
+
+  e.target.value = v;
+});
+
+document.getElementById("cep").addEventListener("input", (e) => {
+  let v = e.target.value.replace(/\D/g, "").slice(0, 8);
+
+  if (v.length > 5) {
+    v = v.replace(/^(\d{5})(\d)/, "$1-$2");
+  }
+
+  e.target.value = v;
+});
+
+function mostrarErro(input, span, msg) {
+  span.textContent = msg;
+  span.classList.add("ativo");
+  input.classList.add("invalido");
+}
+
+function limparErro(input, span) {
+  span.textContent = "";
+  span.classList.remove("ativo");
+  input.classList.remove("invalido");
+}

@@ -57,41 +57,51 @@
         <div class="card">
           <h3>Dados do cliente</h3>
           <div class="grid-2">
-            <input id="nome" placeholder="Nome completo" />
-            <input id="cpf" placeholder="CPF" />
+            <input id="nome" placeholder="Nome completo" required />
+            <div class="campo">
+              <input type="text" id="cpf" placeholder="CPF" maxlength="14" />
+              <span class="erro" id="erro-cpf"></span>
+            </div>
           </div>
         </div>
 
         <div class="card">
           <h3>Endereço</h3>
           <div class="grid-2">
-            <input id="rua" placeholder="Rua" />
-            <input id="numero" placeholder="Número" />
+            <input id="rua" placeholder="Rua" required />
+            <input id="numero" placeholder="Número" required />
           </div>
           <div class="grid-2">
-            <input id="bairro" placeholder="Bairro" />
-            <input id="cidade" placeholder="Cidade" />
+            <input id="bairro" placeholder="Bairro" required />
+            <input id="cidade" placeholder="Cidade" required />
           </div>
           <div class="grid-2">
-            <input id="estado" placeholder="Estado" />
-            <input id="cep" placeholder="CEP" />
+            <input id="estado" placeholder="Estado" required />
+            <div class="campo">
+              <input type="text" id="cep" placeholder="CEP" maxlength="9" />
+              <span class="erro" id="erro-cep"></span>
+            </div>
           </div>
+          <input id="complemento" placeholder="Complemento" required />
         </div>
 
-        <div class="card">
+        <div class="card" style="display: none;">
           <h3>Pagamento</h3>
           <div class="pagamento-opcoes">
             <label class="opcao">
-              <input type="radio" name="pagamento" value="pix" />
+              <input type="radio" name="pagamento" value="pix" required />
               <span>Pix</span>
             </label>
 
             <label class="opcao">
-              <input type="radio" name="pagamento" value="cartao" />
+              <input type="radio" name="pagamento" value="cartao" required />
               <span>Cartão</span>
             </label>
           </div>
-          <div id="area-pagamento"></div>
+          <div
+            id="area-pagamento"
+            style="display: none; margin-top: 10px"
+          ></div>
         </div>
 
         <button id="continuar" class="btn">Continuar</button>

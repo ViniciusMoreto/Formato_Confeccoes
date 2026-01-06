@@ -284,6 +284,26 @@ input:focus {
   accent-color: var(--azul-principal);
 }
 
+.campo {
+  display: flex;
+  flex-direction: column;
+}
+
+.erro {
+  font-size: 0.8rem;
+  color: #d93025;
+  margin: 7px 0 0 7px;
+  display: none;
+}
+
+.erro.ativo {
+  display: block;
+}
+
+input.invalido {
+  border: 1px solid #d93025;
+}
+
 /* TIPO DE CARTÃO */
 .tipo-cartao {
   display: grid;

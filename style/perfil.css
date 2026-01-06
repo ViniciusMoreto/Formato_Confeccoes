@@ -153,7 +153,11 @@ body {
   align-items: center;
   gap: 32px;
   padding: 40px;
-  background: #ffffff;
+  background: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    #fafafa 100%
+  );
   border-radius: 18px;
   margin-bottom: 32px;
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.05);
@@ -168,6 +172,11 @@ body {
 .foto-wrapper img {
   object-fit: cover;
   z-index: 2;
+}
+
+.avatar {
+  border: 4px solid #fff;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
 }
 
 .avatar,
@@ -257,9 +266,11 @@ body {
 
 .card h3 {
   grid-column: span 2;
-  font-size: 15px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 12px;
   font-weight: 600;
-  color: #111827;
+  color: var(--azul-principal);
   margin-top: 36px;
   padding-top: 24px;
   border-top: 1px solid #eee;
@@ -302,6 +313,37 @@ input:disabled {
   cursor: not-allowed;
 }
 
+.senha-wrapper {
+  position: relative;
+  grid-column: span 2;
+}
+
+.senha-wrapper input {
+  padding-right: 48px;
+}
+
+.toggle-senha {
+  all: unset;
+  position: absolute;
+  right: 14px;
+  top: 12px;
+  cursor: pointer;
+  color: #6b7280;
+  font-size: 16px;
+  background: none;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+}
+
+.toggle-senha:hover {
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+
 button {
   grid-column: span 2;
   margin-top: 32px;
@@ -313,9 +355,21 @@ button {
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   border: none;
   color: var(--branco);
+  cursor: pointer;
 }
 
 button:hover {
   transform: translateY(-3px);
   box-shadow: 0 10px 24px rgba(0, 31, 122, 0.25);
+}
+
+.endereco-grid {
+  grid-column: span 2;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 16px;
+}
+
+.endereco-grid input:nth-child(1) {
+  grid-column: span 2;
 }

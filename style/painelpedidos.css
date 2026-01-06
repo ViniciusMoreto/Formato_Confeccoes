@@ -1,0 +1,380 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+:root {
+  --azul-principal: #001F7A;
+  --azul-secundario: #0A2D9A;
+  --amarelo-principal: #FFD32A;
+  --cinza-claro: #F5F5F5;
+  --cinza: #E0E0E0;
+  --cinza-escuro: #333333;
+  --branco: #FFFFFF;
+  --verde: #1f8b4c;
+  --vermelho: #c0392b;
+  --font-family: 'Inter', sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-family);
+  background: var(--cinza);
+}
+
+/* HEADER */
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 3rem;
+  background: var(--branco);
+  border-bottom: 1px solid var(--cinza);
+}
+
+.topo-painel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem 3rem;
+  background: var(--branco);
+  border-bottom: 1px solid var(--cinza);
+}
+
+.btn-voltar {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  background: transparent;
+  color: var(--azul-principal);
+  font-size: 14px;
+  font-weight: 500;
+  padding: 6px 10px;
+  border-radius: 6px;
+  transition: background 0.2s ease;
+}
+
+.btn-voltar:hover {
+  background: var(--cinza-claro);
+}
+
+.titulo {
+  color: var(--azul-principal);
+  font-size: 28px;
+}
+
+.pendentes {
+  background: var(--amarelo-principal);
+  padding: 6px 16px;
+  border-radius: 50px;
+  font-weight: 600;
+  color: #000;
+}
+
+.topo-pedido {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 2rem 0.5rem;
+}
+
+.status {
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.status-pendente {
+  background: #f1c40f;
+  color: #000;
+}
+
+.status-preparo {
+  background: #3498db;
+  color: #fff;
+}
+
+.status-pronto {
+  background: #2ecc71;
+  color: #fff;
+}
+
+.status-cancelado {
+  background: #e74c3c;
+  color: #fff;
+}
+
+/* FILTROS */
+
+.filtro {
+  display: flex;
+  gap: 3rem;
+  padding: 1.5rem 3rem;
+  background: var(--branco);
+  border-bottom: 1px solid var(--cinza);
+  align-items: flex-end;
+}
+
+.grupo-filtro {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.label-filtro {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--cinza-escuro);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* BASE DOS BOTÕES */
+
+.filtros,
+.filtros-status {
+  display: flex;
+  gap: 8px;
+}
+
+/* ESTILO MODERNO */
+
+.filtros button,
+.filtros-status button {
+  padding: 8px 18px;
+  border-radius: 999px;
+  border: 1px solid var(--cinza);
+  background: transparent;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--cinza-escuro);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+/* HOVER */
+
+.filtros button:hover {
+  background: var(--azul-principal);
+  color: var(--branco);
+  border-color: var(--azul-principal);
+}
+
+.filtros-status button[data-status="Pago"]:hover {
+    background: #f1c40f;
+  color: #000;
+  border-color: #f1c40f;
+}
+
+.filtros-status button[data-status="Preparando"]:hover {
+  background: #3498db;
+  color: #fff;
+  border-color: #3498db;
+}
+
+.filtros-status button[data-status="Pronto"]:hover {
+  background: #2ecc71;
+  color: #fff;
+  border-color: #2ecc71;
+}
+
+.filtros-status button[data-status="Cancelado"]:hover {
+  background: #e74c3c;
+  color: #fff;
+  border-color: #e74c3c;
+}
+
+.filtros-status button[data-status="todos"]:hover {
+  background: var(--cinza-escuro);
+  color: #fff;
+  border-color: var(--cinza-escuro);
+}
+
+/* ATIVO – DATA */
+
+.filtros .ativo {
+  background: var(--azul-principal);
+  color: var(--branco);
+  border-color: var(--azul-principal);
+}
+
+/* STATUS — CORES SEMÂNTICAS */
+
+.filtros-status button[data-status="Pago"].ativo {
+  background: #f1c40f;
+  color: #000;
+  border-color: #f1c40f;
+}
+
+.filtros-status button[data-status="Preparando"].ativo {
+  background: #3498db;
+  color: #fff;
+  border-color: #3498db;
+}
+
+.filtros-status button[data-status="Pronto"].ativo {
+  background: #2ecc71;
+  color: #fff;
+  border-color: #2ecc71;
+}
+
+.filtros-status button[data-status="Cancelado"].ativo {
+  background: #e74c3c;
+  color: #fff;
+  border-color: #e74c3c;
+}
+
+.filtros-status button[data-status="todos"].ativo {
+  background: var(--cinza-escuro);
+  color: #fff;
+  border-color: var(--cinza-escuro);
+}
+
+/* PEDIDO */
+.produtos {
+  background: var(--branco);
+  margin: 2rem 3rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+  padding-bottom: 1.5rem;
+}
+
+/* CLIENTE */
+
+.nome_cliente {
+  font-size: 22px;
+  color: var(--azul-principal);
+  padding: 1.5rem 2rem 0.5rem 0;
+}
+
+.data_pedido {
+  padding: 0 2rem 0.5rem;
+  font-size: 14px;
+  color: #666;
+}
+
+.Endereco {
+  font-size: 15px;
+  color: var(--cinza-escuro);
+  padding: 0 2rem;
+}
+
+/* PRODUTOS */
+
+.container_card {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 1.5rem;
+  padding: 2rem;
+}
+
+.card {
+  background: var(--cinza-claro);
+  border-radius: 12px;
+  padding: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 8px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 25px rgba(0,0,0,0.12);
+}
+
+.card img {
+  width: 90px;
+}
+
+.card h1 {
+  font-size: 16px;
+  color: var(--azul-principal);
+}
+
+.card p {
+  font-size: 14px;
+  color: var(--azul-secundario);
+}
+
+.precos {
+  width: 100%;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--cinza);
+}
+
+.card span {
+  display: block;
+  font-size: 13px;
+  color: var(--cinza-escuro);
+}
+
+/* TOTAL E AÇÕES */
+
+.total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 2rem;
+  margin-top: 1rem;
+  border-top: 1px solid var(--cinza);
+  background: var(--cinza-claro);
+}
+
+.preco_total {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--azul-principal);
+}
+
+/* BOTÕES */
+
+.footer_pedido {
+  display: flex;
+  gap: 12px;
+}
+
+.aprovar,
+.cancelar {
+  width: 160px;
+  height: 36px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--branco);
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: filter 0.2s ease, transform 0.1s ease;
+}
+
+.aprovar {
+  background: var(--verde);
+}
+
+.cancelar {
+  background: var(--vermelho);
+}
+
+.aprovar:hover,
+.cancelar:hover {
+  filter: brightness(0.9);
+  transform: translateY(-1px);
+}
+
+.lixeira {
+  width: 40px;
+  height: 36px;
+  border-radius: 6px;
+  border: none;
+  background: #bdc3c7;
+  cursor: pointer;
+  font-size: 16px;
+}
