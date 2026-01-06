@@ -85,7 +85,7 @@
           <input id="complemento" placeholder="Complemento" required />
         </div>
 
-        <div class="card" style="display: none;">
+        <div class="card" id="area-pagamento" style="display: none">
           <h3>Pagamento</h3>
           <div class="pagamento-opcoes">
             <label class="opcao">
@@ -99,7 +99,7 @@
             </label>
           </div>
           <div
-            id="area-pagamento"
+            id="conteudo-pagamento"
             style="display: none; margin-top: 10px"
           ></div>
         </div>
@@ -107,6 +107,13 @@
         <button id="continuar" class="btn">Continuar</button>
       </section>
     </main>
+    <!-- Modal para Pix -->
+    <div id="modal-pix" class="modal-overlay" style="display: none">
+      <div class="modal-content">
+        <button class="modal-close" onclick="fecharModalPix()">&times;</button>
+        <div id="modal-pix-content"></div>
+      </div>
+    </div>
     <script src="./js/abapagamento.js" defer></script>
     <script>
       const cart = document.querySelector(".cart");

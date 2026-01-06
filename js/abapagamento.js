@@ -7,6 +7,17 @@ function getCarrinho() {
 const lista = document.getElementById("lista-carrinho");
 const totalEl = document.getElementById("total");
 
+// Definir variáveis globais para os campos (evita erros de referência)
+const nome = document.getElementById("nome");
+const cpf = document.getElementById("cpf");
+const rua = document.getElementById("rua");
+const numero = document.getElementById("numero");
+const bairro = document.getElementById("bairro");
+const cidade = document.getElementById("cidade");
+const estado = document.getElementById("estado");
+const cep = document.getElementById("cep");
+const complemento = document.getElementById("complemento");
+
 function renderCheckoutCarrinho() {
   if (!lista) return;
 
@@ -79,6 +90,24 @@ function removerItemCheckout(id) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+  // Verificar e pré-preencher dados do perfil
+  const usuarioLogado = JSON.parse(localStorage.getItem("usuarioLogado"));
+  if (usuarioLogado) {
+    // Pré-preencher campos com dados do perfil
+    nome.value = usuarioLogado.nome || "";
+    cpf.value = usuarioLogado.cpf || "";
+    rua.value = usuarioLogado.rua || "";
+    numero.value = usuarioLogado.numero || "";
+    bairro.value = usuarioLogado.bairro || "";
+    cidade.value = usuarioLogado.cidade || "";
+    estado.value = usuarioLogado.estado || "";
+    cep.value = usuarioLogado.cep || "";
+    complemento.value = usuarioLogado.complemento || "";
+  } else {
+    // Opcional: Alerta se não estiver logado (remova se não quiser)
+    console.log("Usuário não logado. Dados não serão salvos no perfil.");
+  }
+
   /* CPF */
   const cpfInput = document.getElementById("cpf");
   const erroCPF = document.getElementById("erro-cpf");
@@ -95,16 +124,34 @@ document.addEventListener("DOMContentLoaded", () => {
 
   cpfInput.addEventListener("blur", validarCPFInput);
 
-  function validarCPFInput() {
+  async function validarCPFInput() {
     if (!cpfInput.value) {
       limparErro(cpfInput, erroCPF);
       return;
     }
 
+    // Verificação básica de formato
     if (!validarCPF(cpfInput.value)) {
       mostrarErro(cpfInput, erroCPF, "CPF inválido");
-    } else {
+      return;
+    }
+
+    // Simulação de verificação real (ex.: rejeita CPFs começando com 000 ou 111)
+    // Para real, mova para backend e use API como ReceitaWS
+    const cpfLimpo = cpfInput.value.replace(/\D/g, "");
+    if (cpfLimpo.startsWith("000") || cpfLimpo.startsWith("111")) {
+      mostrarErro(cpfInput, erroCPF, "CPF não encontrado ou inválido na base de dados");
+      return;
+    }
+
+    // Simulação de consulta (delay para imitar API)
+    try {
+      // Placeholder: Em produção, faça fetch para backend/API
+      // Ex.: await fetch(`/api/verificar-cpf?cpf=${cpfLimpo}`);
+      await new Promise(resolve => setTimeout(resolve, 500)); // Simula delay
       limparErro(cpfInput, erroCPF);
+    } catch {
+      mostrarErro(cpfInput, erroCPF, "Erro ao verificar CPF");
     }
   }
 
@@ -153,60 +200,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 renderCheckoutCarrinho();
 
-/* PAGAMENTO */
-const area = document.getElementById("area-pagamento");
-document.querySelectorAll("input[name='pagamento']").forEach((r) => {
-  r.addEventListener("change", () => {
-    if (r.value === "pix") {
-      area.innerHTML = `<img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=PIX_SIMULADO">`;
-    } else {
-      const total = parseFloat(totalEl.textContent.replace(",", "."));
-      const maxParcelas = calcularParcelas(total);
-
-      let opcoesParcelas = "";
-      for (let i = 1; i <= maxParcelas; i++) {
-        const valorParcela = (total / i).toFixed(2);
-        opcoesParcelas += `<option value="${i}">${i}x de R$ ${valorParcela}</option>`;
-      }
-
-      area.innerHTML = `
-        <div class="tipo-cartao">
-          <label>
-            <input type="radio" name="tipo-cartao" value="credito" required>
-            Crédito
-          </label>
-
-          <label>
-            <input type="radio" name="tipo-cartao" value="debito" required>
-            Débito
-          </label>
-        </div>
-
-        <input placeholder="Número do cartão" required>
-        <input placeholder="Nome no cartão" required>
-
-        <div class="grid-2">
-          <input placeholder="Validade" required>
-          <input placeholder="CVV">
-        </div>
-
-        <div id="parcelamento" style="display:none" required>
-          <select>
-            ${opcoesParcelas}
-          </select>
-        </div>
-      `;
-
-      document.querySelectorAll("input[name='tipo-cartao']").forEach((tipo) => {
-        tipo.addEventListener("change", () => {
-          document.getElementById("parcelamento").style.display =
-            tipo.value === "credito" ? "block" : "none";
-        });
-      });
-    }
-  });
-});
-
 function calcularParcelas(total) {
   const valorMinParcela = 20;
   const maxParcelas = 12;
@@ -219,119 +212,297 @@ function calcularParcelas(total) {
   return parcelasPossiveis;
 }
 
-
 const continuarBtn = document.getElementById("continuar");
-const finalizarBtn = document.createElement("button");
-finalizarBtn.textContent = "Finalizar Pagamento";
-finalizarBtn.classList.add("btn");
-finalizarBtn.style.display = "none";
-continuarBtn.insertAdjacentElement("afterend", finalizarBtn); // coloca abaixo do continuar
+const cardPagamento = document.getElementById("area-pagamento");
+const conteudoPagamento = document.getElementById("conteudo-pagamento");
 
-continuarBtn.addEventListener("click", async (e) => {
-  e.preventDefault();
+document.querySelectorAll("input[name='pagamento']").forEach((radio) => {
+  radio.addEventListener("change", () => {
+    // Limpar conteúdo anterior ao trocar método
+    conteudoPagamento.innerHTML = "";
+    conteudoPagamento.style.display = 'none'; // Reset para oculto
 
-  // 1️⃣ Erros ativos
-  const errosAtivos = document.querySelectorAll(".erro.ativo");
-  if (errosAtivos.length > 0) {
-    alert("Corrija os campos inválidos antes de continuar.");
-    return;
-  }
-
-  // 2️⃣ Campos obrigatórios
-  const obrigatorios = document.querySelectorAll(
-    "#nome, #cpf, #rua, #numero, #bairro, #cidade, #estado, #cep"
-  );
-  for (const campo of obrigatorios) {
-    if (!campo.value) {
-      campo.focus();
-      alert("Preencha todos os campos obrigatórios antes de continuar.");
-      return;
+    if (radio.value === "pix") {
+      mostrarPixPreview();
     }
-  }
 
-  // 3️⃣ Carrinho vazio
-  const carrinho = getCarrinho();
-  if (carrinho.length === 0) {
-    alert("Carrinho vazio");
-    return;
-  }
-
-  // 4️⃣ Mostra métodos de pagamento
-  area.style.display = "block";
-  finalizarBtn.style.display = "block";
-  continuarBtn.disabled = true;
-
-  area.innerHTML = `
-    <label class="opcao">
-      <input type="radio" name="pagamento" value="pix" required />
-      <span>Pix</span>
-    </label>
-
-    <label class="opcao">
-      <input type="radio" name="pagamento" value="cartao" required />
-      <span>Cartão</span>
-    </label>
-
-    <div id="detalhes-cartao" style="display:none; margin-top:10px;">
-      <input placeholder="Número do cartão" required />
-      <input placeholder="Nome no cartão" required />
-      <div class="grid-2">
-        <input placeholder="Validade" required />
-        <input placeholder="CVV" required />
-      </div>
-      <div id="parcelamento" style="display:none;">
-        <select></select>
-      </div>
-    </div>
-  `;
-
-  // Mostra detalhes do cartão quando selecionar cartão
-  document.querySelectorAll("input[name='pagamento']").forEach((tipo) => {
-    tipo.addEventListener("change", () => {
-      const detalhesCartao = document.getElementById("detalhes-cartao");
-      detalhesCartao.style.display = tipo.value === "cartao" ? "block" : "none";
-    });
+    if (radio.value === "cartao") {
+      mostrarFormularioCartao();
+    }
   });
 });
 
-finalizarBtn.addEventListener("click", () => {
-  const metodoPagamento = document.querySelector("input[name='pagamento']:checked");
-  if (!metodoPagamento) {
-    alert("Escolha um método de pagamento antes de finalizar.");
+let etapaPagamento = false;
+
+continuarBtn.addEventListener("click", (e) => {
+  e.preventDefault();
+
+  // Se ainda NÃO estiver na etapa de pagamento
+  if (!etapaPagamento) {
+    // 🔎 Validação básica
+    const errosAtivos = document.querySelectorAll(".erro.ativo");
+    if (errosAtivos.length > 0) {
+      alert("Corrija os campos inválidos.");
+      return;
+    }
+
+    const obrigatorios = document.querySelectorAll(
+      "#nome, #cpf, #rua, #numero, #bairro, #cidade, #estado, #cep"
+    );
+
+    for (const campo of obrigatorios) {
+      if (!campo.value) {
+        campo.focus();
+        alert("Preencha todos os campos obrigatórios.");
+        return;
+      }
+    }
+
+    if (getCarrinho().length === 0) {
+      alert("Carrinho vazio.");
+      return;
+    }
+
+    // ✅ Mostra pagamento
+    cardPagamento.style.display = "block";
+    continuarBtn.textContent = "Finalizar compra";
+    etapaPagamento = true;
+
     return;
   }
 
+  // 🚀 FINALIZAR COMPRA
+  const metodoPagamento = document.querySelector(
+    "input[name='pagamento']:checked"
+  );
+
+  if (!metodoPagamento) {
+    alert("Escolha uma forma de pagamento.");
+    return;
+  }
+
+  if (metodoPagamento.value === "pix") {
+    abrirModalPix(); // Abre modal com Pix
+    return; // Não finaliza ainda
+  }
+
+  if (metodoPagamento.value === "cartao") {
+    validarCartaoEFinalizar();
+  }
+});
+
+function finalizarPedido(metodo) {
   const carrinho = getCarrinho();
+
   const pedido = {
     id: "PED-" + Date.now(),
     cliente: {
-      nome: document.getElementById("nome").value.trim(),
-      cpf: document.getElementById("cpf").value,
+      nome: nome.value,
+      cpf: cpf.value,
     },
     endereco: {
-      rua: document.getElementById("rua").value.trim(),
-      numero: document.getElementById("numero").value.trim(),
-      bairro: document.getElementById("bairro").value.trim(),
-      cidade: document.getElementById("cidade").value.trim(),
-      estado: document.getElementById("estado").value.trim(),
-      cep: document.getElementById("cep").value,
-      complemento: document.getElementById("complemento").value.trim(),
+      rua: rua.value,
+      numero: numero.value,
+      bairro: bairro.value,
+      cidade: cidade.value,
+      estado: estado.value,
+      cep: cep.value,
+      complemento: complemento.value,
     },
     produtos: carrinho,
-    total: carrinho.reduce((soma, p) => soma + p.preco * p.quantidade, 0),
-    pagamento: metodoPagamento.value,
-    status: "Pago",
+    total: carrinho.reduce((s, p) => s + p.preco * p.quantidade, 0),
+    pagamento: metodo,
+    status: metodo === "pix" ? "Pago" : "Pago", // Agora Pix é validado automaticamente
     data: new Date().toLocaleDateString("pt-BR"),
   };
 
   const pedidos = JSON.parse(localStorage.getItem("pedidos")) || [];
   pedidos.push(pedido);
+
   localStorage.setItem("pedidos", JSON.stringify(pedidos));
   localStorage.removeItem(CART_KEY);
 
-  alert("Pagamento concluído com sucesso!");
-  window.location.href = "index.html";
-});
+  // Salvar dados no perfil após compra (se logado)
+  salvarDadosNoPerfil();
+
+  alert("Pagamento realizado com sucesso! Seu pedido foi processado.");
+  window.location.href = "index.html"; // Redireciona para home
+}
+
+// Nova função: Salva dados do checkout no perfil
+function salvarDadosNoPerfil() {
+  const usuarioLogado = JSON.parse(localStorage.getItem("usuarioLogado"));
+  if (!usuarioLogado) return; // Não salva se não estiver logado
+
+  // Atualizar dados do usuário com os do checkout
+  usuarioLogado.nome = nome.value.trim();
+  usuarioLogado.cpf = cpf.value.trim();
+  usuarioLogado.rua = rua.value.trim();
+  usuarioLogado.numero = numero.value.trim();
+  usuarioLogado.bairro = bairro.value.trim();
+  usuarioLogado.cidade = cidade.value.trim();
+  usuarioLogado.estado = estado.value.trim();
+  usuarioLogado.cep = cep.value.trim();
+  usuarioLogado.complemento = complemento.value.trim();
+
+  // Salvar no localStorage (mesma lógica do perfil)
+  localStorage.setItem("usuarioLogado", JSON.stringify(usuarioLogado));
+
+  const usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
+  const index = usuarios.findIndex((u) => u.email === usuarioLogado.email);
+  if (index !== -1) {
+    usuarios[index] = usuarioLogado;
+    localStorage.setItem("usuarios", JSON.stringify(usuarios));
+  }
+}
+
+function abrirModalPix() {
+  const total = totalEl.textContent;
+  // Simulação de código Pix (em produção, gere via API do banco/gateway)
+  const codigoPix = `00020126360014BR.GOV.BCB.PIX0114+5511999999999520400005303986540${total.replace(
+    ".",
+    ""
+  )}5802BR5920Formato Confecções6009SAO PAULO62070503***6304ABCD`;
+
+  const modalContent = document.getElementById("modal-pix-content");
+  modalContent.innerHTML = `
+    <div class="pix-box">
+      <h4>Pague com Pix</h4>
+
+      <img 
+        src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(
+          codigoPix
+        )}"
+        alt="QR Code Pix"
+      />
+
+      <p class="pix-valor">
+        Valor: <strong>R$ ${total}</strong>
+      </p>
+
+      <div class="pix-codigo-container">
+        <textarea readonly class="pix-codigo">${codigoPix}</textarea>
+        <button class="btn-copiar" onclick="copiarPix()">Copiar</button>
+      </div>
+
+      <p id="timer-pix" class="pix-timer">Tempo restante: 05:00</p>
+
+      <p class="pix-info">
+        Escaneie o QR Code ou copie o código para pagar. O pagamento será validado automaticamente.
+      </p>
+    </div>
+  `;
+
+  // Mostrar modal
+  document.getElementById("modal-pix").style.display = "flex";
+
+  // Iniciar timer de 5 minutos e simulação de validação automática
+  iniciarTimerPix();
+}
+
+function fecharModalPix() {
+  document.getElementById("modal-pix").style.display = "none";
+}
+
+function iniciarTimerPix() {
+  let tempoRestante = 300; // 5 minutos em segundos
+  const timerEl = document.getElementById("timer-pix");
+
+  const intervalo = setInterval(() => {
+    const minutos = Math.floor(tempoRestante / 60);
+    const segundos = tempoRestante % 60;
+    timerEl.textContent = `Tempo restante: ${minutos.toString().padStart(2, '0')}:${segundos.toString().padStart(2, '0')}`;
+
+    tempoRestante--;
+
+    // Simulação: Após 10 segundos, "valida" o pagamento automaticamente (em produção, use webhook do gateway)
+    if (tempoRestante === 290) { // 10 segundos após abrir
+      clearInterval(intervalo);
+      finalizarPedido("pix");
+      fecharModalPix();
+    }
+
+    if (tempoRestante < 0) {
+      clearInterval(intervalo);
+      timerEl.textContent = "Tempo expirado. Tente novamente.";
+      fecharModalPix();
+    }
+  }, 1000);
+}
+
+function mostrarPixPreview() {
+  conteudoPagamento.innerHTML = `
+    <div class="pix-preview">
+      <p>Você escolheu <strong>Pix</strong>.</p>
+      <p>O QR Code será gerado ao finalizar a compra.</p>
+    </div>
+  `;
+
+  conteudoPagamento.style.display = 'block';
+}
+
+function mostrarFormularioCartao() {
+  conteudoPagamento.innerHTML = `
+    <div class="cartao-box">
+      <h4>Pagamento com Cartão</h4>
+
+      <div class="tipo-cartao">
+        <label>
+          <input type="radio" name="tipoCartao" value="credito" checked>
+          Crédito
+        </label>
+        <label>
+          <input type="radio" name="tipoCartao" value="debito">
+          Débito
+        </label>
+      </div>
+
+      <input id="cartao-nome" placeholder="Nome no cartão">
+      <input id="cartao-numero" placeholder="Número do cartão" maxlength="19">
+
+      <div class="linha">
+        <input id="cartao-validade" placeholder="MM/AA">
+        <input id="cartao-cvv" placeholder="CVV" maxlength="4">
+      </div>
+
+      <input id="cartao-cpf" placeholder="CPF do titular">
+    </div>
+  `;
+
+  conteudoPagamento.style.display = 'block';
+}
+
+function validarCartaoEFinalizar() {
+  const nomeCartao = document.getElementById("cartao-nome");
+  const numeroCartao = document.getElementById("cartao-numero");
+  const validadeCartao = document.getElementById("cartao-validade");
+  const cvvCartao = document.getElementById("cartao-cvv");
+
+  if (!nomeCartao.value || !numeroCartao.value || !validadeCartao.value || !cvvCartao.value) {
+    alert("Preencha todos os dados do cartão.");
+    return;
+  }
+
+  alert("Pagamento com cartão aprovado (simulação)");
+  finalizarPedido("cartao");
+}
+
+function copiarPix() {
+  const codigo = document.querySelector(".pix-codigo");
+  if (!codigo) return;
+
+  codigo.select();
+  document.execCommand("copy");
+
+  // Feedback visual (opcional: animação ou mudança de texto)
+  const btnCopiar = document.querySelector(".btn-copiar");
+  if (btnCopiar) {
+    btnCopiar.textContent = "Copiado!";
+    setTimeout(() => btnCopiar.textContent = "Copiar", 2000);
+  }
+
+  alert("Código Pix copiado!");
+}
 
 function validarCPF(cpf) {
   cpf = cpf.replace(/\D/g, "");
@@ -350,26 +521,6 @@ function validarCPF(cpf) {
 
   return dig2 == cpf[10];
 }
-
-document.getElementById("cpf").addEventListener("input", (e) => {
-  let v = e.target.value.replace(/\D/g, "").slice(0, 11);
-
-  v = v.replace(/^(\d{3})(\d)/, "$1.$2");
-  v = v.replace(/^(\d{3})\.(\d{3})(\d)/, "$1.$2.$3");
-  v = v.replace(/^(\d{3})\.(\d{3})\.(\d{3})(\d)/, "$1.$2.$3-$4");
-
-  e.target.value = v;
-});
-
-document.getElementById("cep").addEventListener("input", (e) => {
-  let v = e.target.value.replace(/\D/g, "").slice(0, 8);
-
-  if (v.length > 5) {
-    v = v.replace(/^(\d{5})(\d)/, "$1-$2");
-  }
-
-  e.target.value = v;
-});
 
 function mostrarErro(input, span, msg) {
   span.textContent = msg;
